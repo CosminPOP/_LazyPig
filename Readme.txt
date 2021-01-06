@@ -1,3 +1,6 @@
+Updated for Turtle WoW Expansion mounts and Riding Turtle - autodismount
+
+
 This mod is mostly for lazy people:
 
 
