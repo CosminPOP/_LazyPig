@@ -622,14 +622,16 @@ function LazyPig_OnEvent(event)
 				local bind = GetBindLocation();
 				if not (bind == GetSubZoneText() or bind == GetZoneText() or bind == GetRealZoneText() or bind == GetMinimapZoneText()) then
 					gossipbreak = true
-				end	
+				end
 			elseif gossipnr then
 				gossipbreak = true
+			elseif (GossipOptions[i] == "trainer" and dsc == "Reset my talents.") then
+				gossipbreak = false
 			elseif (GossipOptions[i] == "trainer" or GossipOptions[i] == "vendor" and processgossip or GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip) or GossipOptions[i] == "gossip" and (IsAltKeyDown() or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core") and processgossip)) then
 				gossipnr = i
-			elseif GossipOptions[i] == "taxi" and processgossip then	
+			elseif GossipOptions[i] == "taxi" and processgossip then
 				gossipnr = i
-				LazyPig_Dismount();	
+				LazyPig_Dismount();
 			end
 		end
 		
@@ -942,7 +944,21 @@ function LazyPig_ZGRoll(id)
 			local _, _, _, hex = GetItemQualityColor(quality)
 			DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex..RollReturn().." "..GetLootRollItemLink(id))
 			return
-		end	
+		end
+		if string.find(name ,"Necrotic Rune") then
+			RollOnLoot(id, 2);
+			local _, _, _, hex = GetItemQualityColor(quality)
+			DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex.."GREED "..GetLootRollItemLink(id))
+
+			for i=1,STATICPOPUP_NUMDIALOGS do
+				local frame = getglobal("StaticPopup"..i)
+				if frame:IsShown() then
+					getglobal("StaticPopup"..i.."Button1"):Click();
+				end
+			end
+
+			return
+		end
 	end	
 end
 
@@ -2048,7 +2064,7 @@ function LazyPig_ChatFrame_OnEvent(event)
 	if event == "CHAT_MSG_LOOT" or event == "CHAT_MSG_MONEY" then
 		local bijou = string.find(arg1 ,"Bijou")
 		local coin = string.find(arg1 ,"Coin")
-		
+
 		local green_roll = greenrolltime > GetTime()
 		local check_uncommon = LPCONFIG.SPAM_UNCOMMON and string.find(arg1 ,"1eff00")
 		local check_rare = LPCONFIG.SPAM_RARE and string.find(arg1 ,"0070dd")
