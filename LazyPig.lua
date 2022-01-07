@@ -959,6 +959,20 @@ function LazyPig_ZGRoll(id)
 
 			return
 		end
+		if string.find(name ,"Corrupted Sand") then
+			RollOnLoot(id, 2);
+			local _, _, _, hex = GetItemQualityColor(quality)
+			DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex.."GREED "..GetLootRollItemLink(id))
+
+			for i=1,STATICPOPUP_NUMDIALOGS do
+				local frame = getglobal("StaticPopup"..i)
+				if frame:IsShown() then
+					getglobal("StaticPopup"..i.."Button1"):Click();
+				end
+			end
+
+			return
+		end
 	end	
 end
 
