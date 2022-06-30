@@ -1200,13 +1200,15 @@ function LazyPig_Dismount()
 	local tooltipfind = "Increases speed by (.+)%%"
 	local expansionMounts = "speed based on"
 	local turtleMount = "Slow and steady..."
+	local turtleMountv2 = "Riding"
 	while GetPlayerBuff(counter) >= 0 do
 		local index, untilCancelled = GetPlayerBuff(counter)
 		LazyPig_Buff_Tooltip:SetPlayerBuff(index)
 		local desc = LazyPig_Buff_TooltipTextLeft2:GetText()
 		if desc then
 			_, _, speed = string.find(desc, tooltipfind) 
-			if speed or string.find(desc, expansionMounts) or string.find(desc, turtleMount) then
+			if speed or string.find(desc, expansionMounts) or string.find(desc, turtleMount) or string.find(desc, turtleMountv2) then
+			
 				CancelPlayerBuff(counter)
 				return
 			end	
