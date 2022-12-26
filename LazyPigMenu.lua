@@ -5,20 +5,55 @@ local CheckBoxTables = {
 		[2] = { "LazyPigCheckbox01", "Greed" },
 		[3] = { "LazyPigCheckbox02", "Pass" }
 	},
-
+	
 	["Zul'Gurub Roll Automation"] = {
 		[0] = "LazyPigCheckboxGroupZGRoll",
-		[1] = { "LazyPigCheckbox10", "Need" },
-		[2] = { "LazyPigCheckbox11", "Greed" },
-		[3] = { "LazyPigCheckbox12", "Pass" }
+		[1] = { "LazyPigCheckbox03", "Need" },
+		[2] = { "LazyPigCheckbox04", "Greed" },
+		[3] = { "LazyPigCheckbox05", "Pass" }
+	},
+	
+	["Molten Core Roll Automation"] = {
+		[0] = "LazyPigCheckboxGroupMCRoll",
+		[1] = { "LazyPigCheckbox06", "Need" },
+		[2] = { "LazyPigCheckbox07", "Greed" },
+		[3] = { "LazyPigCheckbox08", "Pass" }
+	},
+	
+	["AQ Idols + Scarabs Automation"] = {
+		[0] = "LazyPigCheckboxGroupAQRoll",
+		[1] = { "LazyPigCheckbox09", "Need" },
+		[2] = { "LazyPigCheckbox10", "Greed" },
+		[3] = { "LazyPigCheckbox11", "Pass" }
+	},
+	
+	["AQ40 Blue/Green/Yel Mount Automation"] = {
+		[0] = "LazyPigCheckboxGroupAQMountRoll",
+		[1] = { "LazyPigCheckbox12", "Need" },
+		[2] = { "LazyPigCheckbox13", "Greed" },
+		[3] = { "LazyPigCheckbox14", "Pass" }
+	},
+	
+	["Black Morass Corrupted Sand Automation"] = {
+		[0] = "LazyPigCheckboxGroupSandRoll",
+		[1] = { "LazyPigCheckbox15", "Need" },
+		[2] = { "LazyPigCheckbox16", "Greed" },
+		[3] = { "LazyPigCheckbox17", "Pass" }
+	},
+	
+	["Naxx Roll Automation"] = {
+		[0] = "LazyPigCheckboxGroupNaxxRoll",
+		[1] = { "LazyPigCheckbox18", "Need" },
+		[2] = { "LazyPigCheckbox19", "Greed" },
+		[3] = { "LazyPigCheckbox20", "Pass" }
 	},
 
 	["World Chat Mute"] = {
 		[0] = "LazyPigCheckboxGroupWorldChatMute",
-		[1] = { "LazyPigCheckbox20", "Dungeons" },
-		[2] = { "LazyPigCheckbox21", "Raids" },
-		[3] = { "LazyPigCheckbox22", "Battlegrounds" },
-		[4] = { "LazyPigCheckbox23", "Mute Permanently", "Mute the WorldChannel for good..."}
+		[1] = { "LazyPigCheckbox22", "Dungeons" },
+		[2] = { "LazyPigCheckbox23", "Raids" },
+		[3] = { "LazyPigCheckbox24", "Battlegrounds" },
+		[4] = { "LazyPigCheckbox25", "Mute Permanently", "Mute the WorldChannel for good..."}
 	},
 
 	["Battlegrounds Automation"] = {
@@ -74,7 +109,8 @@ local CheckBoxTables = {
 		[1] = { "LazyPigCheckbox70", "Players' Spam" },
 		[2] = { "LazyPigCheckbox71", "Uncommon Roll" },
 		[3] = { "LazyPigCheckbox72", "Rare Roll" },
-		[4] = { "LazyPigCheckbox73", "Poor-Common Loot" }
+		[4] = { "LazyPigCheckbox73", "Poor-Common Loot" },
+		[5] = { "LazyPigCheckbox21", "Lazy Pig Auto Roll Messages" }
 	},
 }
 --Grey-Common Loot
@@ -139,8 +175,8 @@ function LazyPig_CreateOptionsFrame()
 	tinsert(UISpecialFrames,"LazyPigOptionsFrame")
 	frame:SetScale(.81)
 
-	frame:SetWidth(480)
-	frame:SetHeight(428)
+	frame:SetWidth(630)
+	frame:SetHeight(528)
 	
 	frame:SetPoint("TOPLEFT", nil, "TOPLEFT", 250, -50)
 	frame:SetBackdrop( {
@@ -180,7 +216,7 @@ function LazyPig_CreateOptionsFrame()
 	-- MenuTitle Frame
 	local texture_title = frame:CreateTexture("LazyPigOptionsFrameTitle")
 	texture_title:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Header", true);
-	texture_title:SetWidth(266)
+	texture_title:SetWidth(296)
 	texture_title:SetHeight(58)
 	texture_title:SetPoint("CENTER", frame, "TOP", 0, -20)
 
@@ -189,7 +225,7 @@ function LazyPig_CreateOptionsFrame()
 	-- MenuTitle FontString
 	local fs_title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	fs_title:SetPoint("CENTER", frame.texture_title, "CENTER", 0, 12)
-	fs_title:SetText("_LazyPig Options")
+	fs_title:SetText("LazyPig Options v6.0.0")
 
 	frame.fs_title = fs_title
 
@@ -230,28 +266,46 @@ function LazyPig_CreateOptionsFrame()
 	frame.cbgroup_greedroll = CheckBoxGroup(frame, 20, -45, str, CheckBoxTables[str])
 	
 	local str = "Zul'Gurub Roll Automation"
-	frame.cbgroup_zgroll = CheckBoxGroup(frame, 20, -107, str, CheckBoxTables[str])
-
-	local str = "World Chat Mute"
-	frame.cbgroup_worldchatmute = CheckBoxGroup(frame, 20, -168, str, CheckBoxTables[str])
+	frame.cbgroup_zgroll = CheckBoxGroup(frame, 20, -105, str, CheckBoxTables[str])
 	
-	local str = "Battlegrounds Automation"
-	frame.cbgroup_bgautomation = CheckBoxGroup(frame, 20, -244, str, CheckBoxTables[str])
+	local str = "Molten Core Roll Automation"
+	frame.cbgroup_aq = CheckBoxGroup(frame, 20, -165, str, CheckBoxTables[str])
 	
-	local str = "Nameplates Display Rules"
-	frame.cbgroup_nameplates = CheckBoxGroup(frame, 20, -348, str, CheckBoxTables[str])
+	local str = "AQ Idols + Scarabs Automation"
+	frame.cbgroup_aq = CheckBoxGroup(frame, 20, -225, str, CheckBoxTables[str])
+	
+	local str = "AQ40 Blue/Green/Yel Mount Automation"
+	frame.cbgroup_aq = CheckBoxGroup(frame, 20, -285, str, CheckBoxTables[str])
+	
+	local str = "Black Morass Corrupted Sand Automation"
+	frame.cbgroup_sand = CheckBoxGroup(frame, 20, -345, str, CheckBoxTables[str])
+	
+	local str = "Naxx Roll Automation"
+	frame.cbgroup_sand = CheckBoxGroup(frame, 20, -405, str, CheckBoxTables[str])
+	
 	
 	local str = "Smart Salvation Remover"
-	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 250, -195, str, CheckBoxTables[str])
+	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 250, -45, str, CheckBoxTables[str])
 	
-	local str = "Chat Filter"
-	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 250, -120, str, CheckBoxTables[str])
-
 	local str = "Group Invite Accept Rules"
-	frame.cbgroup_groupinvite = CheckBoxGroup(frame, 250, -45, str, CheckBoxTables[str])
+	frame.cbgroup_groupinvite = CheckBoxGroup(frame, 250, -92, str, CheckBoxTables[str])
+
+	local str = "Battlegrounds Automation"
+	frame.cbgroup_bgautomation = CheckBoxGroup(frame, 250, -168, str, CheckBoxTables[str])
+	
+	local str = "Nameplates Display Rules"
+	frame.cbgroup_nameplates = CheckBoxGroup(frame, 250, -272, str, CheckBoxTables[str])
+	
 
 	local str = "Single Choice Rules"
-	frame.cbgroup_singlechoise = CheckBoxGroup(frame, 250, -242, str, CheckBoxTables[str])
+	frame.cbgroup_singlechoise = CheckBoxGroup(frame, 250, -338, str, CheckBoxTables[str])
+	
+	
+	local str = "World Chat Mute"
+	frame.cbgroup_worldchatmute = CheckBoxGroup(frame, 450, -45, str, CheckBoxTables[str])
+	
+	local str = "Chat Filter"
+	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 450, -125, str, CheckBoxTables[str])
 
 	return frame
 

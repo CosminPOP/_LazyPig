@@ -88,9 +88,18 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				
-				
-				<FontString name="LazyPigText1" inherits="GameFontNormal" text="ZG Roll Automation">
+
+				<FontString name="LazyPigText1" inherits="GameFontNormal" text="AQ Roll Automation">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
+							<Offset>
+								<AbsDimension x="0" y="-45" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<FontString name="LazyPigText2" inherits="GameFontNormal" text="ZG Roll Automation">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
 							<Offset>
@@ -99,8 +108,18 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
+
+				<FontString name="LazyPigText3" inherits="GameFontNormal" text="Sand Roll Automation">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
+							<Offset>
+								<AbsDimension x="0" y="-155" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			
-				<FontString name="LazyPigText2" inherits="GameFontNormal" text="World Chat Mute">
+				<FontString name="LazyPigText4" inherits="GameFontNormal" text="World Chat Mute">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
 							<Offset>
@@ -110,7 +129,7 @@
 					</Anchors>
 				</FontString>
 				
-				<FontString name="LazyPigText3" inherits="GameFontNormal" text="Group Accept Rules">
+				<FontString name="LazyPigText5" inherits="GameFontNormal" text="Group Accept Rules">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
 							<Offset>
@@ -120,7 +139,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="LazyPigText4" inherits="GameFontNormal" text="Nameplates Display Rules">
+				<FontString name="LazyPigText6" inherits="GameFontNormal" text="Nameplates Display Rules">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
 							<Offset>
@@ -130,7 +149,7 @@
 					</Anchors>
 				</FontString>
 				
-				<FontString name="LazyPigText5" inherits="GameFontNormal" text="Battleground Automation">
+				<FontString name="LazyPigText7" inherits="GameFontNormal" text="Battleground Automation">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
 							<Offset>
@@ -140,7 +159,7 @@
 					</Anchors>
 				</FontString>
 				
-				<FontString name="LazyPigText6" inherits="GameFontNormal" text="Inteligent Salvation Remover">
+				<FontString name="LazyPigText8" inherits="GameFontNormal" text="Inteligent Salvation Remover">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="LazyPigText0">
 							<Offset>
@@ -390,14 +409,136 @@
 				</OnClick>
 			</Scripts>
 		</CheckButton>
-		
-		
-		<!-- 2 ZG Roll -->
-		<CheckButton name="LazyPigCheckbox10" inherits="LazyPigCheckboxTemplate">
+
+		<!-- ZG Roll -->
+		<CheckButton name="LazyPigCheckbox03" inherits="LazyPigCheckboxTemplate">
 			<Anchors>
 				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
 					<Offset>
 						<AbsDimension x="20" y="-20" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(03);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(03);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox04" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-45" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(04);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(04);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox05" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-70" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(05);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(05);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+
+		<!-- MC Roll -->
+		<CheckButton name="LazyPigCheckbox06" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-20" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(06);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(06);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox07" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-45" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(07);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(07);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox08" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-70" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(08);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(08);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+
+		<!-- AQ Roll -->
+		<CheckButton name="LazyPigCheckbox09" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-20" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(09);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(09);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox10" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-45" />						
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -411,10 +552,10 @@
 			</Scripts>
 		</CheckButton>
 		<CheckButton name="LazyPigCheckbox11" inherits="LazyPigCheckboxTemplate">
-			<Anchors>
+					<Anchors>
 				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
 					<Offset>
-						<AbsDimension x="20" y="-45" />						
+						<AbsDimension x="20" y="-70" />						
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -427,11 +568,13 @@
 				</OnClick>
 			</Scripts>
 		</CheckButton>
+		
+		<!-- AQ40 Mount Roll -->
 		<CheckButton name="LazyPigCheckbox12" inherits="LazyPigCheckboxTemplate">
 			<Anchors>
 				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
 					<Offset>
-						<AbsDimension x="20" y="-70" />						
+						<AbsDimension x="20" y="-20" />						
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -444,14 +587,134 @@
 				</OnClick>
 			</Scripts>
 		</CheckButton>
-		
-		
-		<!-- World Chat Tweak -->
-		<CheckButton name="LazyPigCheckbox20" inherits="LazyPigCheckboxTemplate">
+		<CheckButton name="LazyPigCheckbox13" inherits="LazyPigCheckboxTemplate">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="LazyPigText2">
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-45" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(13);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(13);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox14" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-70" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(14);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(14);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+
+		<!-- Sand Roll -->
+		<CheckButton name="LazyPigCheckbox15" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
 					<Offset>
 						<AbsDimension x="20" y="-20" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(15);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(15);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox16" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-45" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(16);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(16);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox17" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-70" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(17);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(17);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+
+		<!-- Naxx Roll -->
+		<CheckButton name="LazyPigCheckbox18" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-20" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(18);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(18);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox19" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-45" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(19);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(19);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+		<CheckButton name="LazyPigCheckbox20" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText1">
+					<Offset>
+						<AbsDimension x="20" y="-70" />						
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -465,30 +728,14 @@
 			</Scripts>
 		</CheckButton>
 
-
-		<CheckButton name="LazyPigCheckbox21" inherits="LazyPigCheckboxTemplate">
-			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="LazyPigText2">
-					<Offset>
-						<AbsDimension x="20" y="-45" />						
-					</Offset>
-				</Anchor>
-			</Anchors>
-			<Scripts>
-				<OnShow>
-					LazyPig_GetOption(21);
-				</OnShow>
-				<OnClick>
-					LazyPig_SetOption(21);
-				</OnClick>
-			</Scripts>
-		</CheckButton>
-
+				
+		
+		<!-- World Chat Tweak -->
 		<CheckButton name="LazyPigCheckbox22" inherits="LazyPigCheckboxTemplate">
 			<Anchors>
 				<Anchor point="TOPLEFT" relativeTo="LazyPigText2">
 					<Offset>
-						<AbsDimension x="20" y="-70" />						
+						<AbsDimension x="20" y="-20" />						
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -501,12 +748,13 @@
 				</OnClick>
 			</Scripts>
 		</CheckButton>
-	
+
+
 		<CheckButton name="LazyPigCheckbox23" inherits="LazyPigCheckboxTemplate">
 			<Anchors>
 				<Anchor point="TOPLEFT" relativeTo="LazyPigText2">
 					<Offset>
-						<AbsDimension x="20" y="-95" />						
+						<AbsDimension x="20" y="-45" />						
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -516,6 +764,42 @@
 				</OnShow>
 				<OnClick>
 					LazyPig_SetOption(23);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+
+		<CheckButton name="LazyPigCheckbox24" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText2">
+					<Offset>
+						<AbsDimension x="20" y="-70" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(24);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(24);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
+	
+		<CheckButton name="LazyPigCheckbox25" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText2">
+					<Offset>
+						<AbsDimension x="20" y="-95" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(25);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(25);
 				</OnClick>
 			</Scripts>
 		</CheckButton>

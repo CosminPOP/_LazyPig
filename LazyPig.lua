@@ -16,8 +16,14 @@ LPCONFIG = {
 	EPLATE = false, 
 	FPLATE = false, 
 	HPLATE = false, 
-	RIGHT = true, 
-	ZG = 1, 
+	RIGHT = true,
+	ZG = 1,
+	MC = 1,
+	AQ = 2,
+	AQMOUNT = 0,
+	SAND = 1,
+	NAXX = 0,
+	ROLLMSG = true,
 	DUEL = false, 
 	NOSAVE = false, 
 	GREEN = 2, 
@@ -26,9 +32,9 @@ LPCONFIG = {
 	WORLDRAID = false, 
 	WORLDBG = false, 
 	WORLDUNCHECK = nil, 
-	SPAM = true,
-	SPAM_UNCOMMON = true,
-	SPAM_RARE = true,
+	SPAM = false,
+	SPAM_UNCOMMON = false,
+	SPAM_RARE = false,
 	SHIFTSPLIT = true, 
 	REZ = true, 
 	GOSSIP = true, 
@@ -119,13 +125,29 @@ local LazyPigMenuStrings = {
 		[00]= "Need",
 		[01]= "Greed",
 		[02]= "Pass",
-		[10]= "Need",
-		[11]= "Greed",
-		[12]= "Pass",
-		[20]= "Dungeon",
-		[21]= "Raid",
-		[22]= "Battleground",
-		[23]= "Mute Permanently",
+		[03]= "Need",
+		[04]= "Greed",
+		[05]= "Pass",
+		[06]= "Need",
+		[07]= "Greed",
+		[08]= "Pass",
+		[09]= "Need",
+		[10]= "Greed",
+		[11]= "Pass",
+		[12]= "Need",
+		[13]= "Greed",
+		[14]= "Pass",
+		[15]= "Need",
+		[16]= "Greed",
+		[17]= "Pass",
+		[18]= "Need",
+		[19]= "Greed",
+		[20]= "Pass",
+		[21]= "LazyPig Auto Roll Messages",
+		[22]= "Dungeon",
+		[23]= "Raid",
+		[24]= "Battleground",
+		[25]= "Mute Permanently",
 		[30]= "GuildMates",
 		[31]= "Friends",
 		[32]= "Strangers",
@@ -525,7 +547,7 @@ function LazyPig_OnEvent(event)
 		LazyPig_EndSplit()	
 			
 	elseif(event == "START_LOOT_ROLL") then
-		LazyPig_ZGRoll(arg1)
+		--LazyPig_AutoRoll(arg1)
 	
 	elseif(event == "CHAT_MSG_LOOT") then
 		if (string.find(arg1 ,"You won") or string.find(arg1 ,"You receive")) and (string.find(arg1 ,"cffa335e") or string.find(arg1, "cff0070d") or string.find(arg1, "cffff840")) and not string.find(arg1 ,"Bijou") and not string.find(arg1 ,"Idol") and not string.find(arg1 ,"Shard") then
@@ -925,55 +947,92 @@ function LazyPig_BagReturn(find)
 	return nil
 end
 
-function LazyPig_ZGRoll(id)
-	RollReturn = function()
+function LazyPig_AutoRoll(id)
+	local cfg = ""
+	RollReturn = function(cfg)
 		local txt = ""
-		if LPCONFIG.ZG == 1 then
+		if cfg == 1 then
 			txt = "NEED"
-		elseif LPCONFIG.ZG == 2 then
+		elseif cfg == 2 then
 			txt = "GREED"
-		elseif LPCONFIG.ZG == 0 then
+		elseif cfg == 0 then
 			txt = "PASS"
 		end
 		return txt
 	end
+
+	local _, name, _, quality = GetLootRollItemInfo(id);
+
 	if LPCONFIG.ZG then	
-		local _, name, _, quality = GetLootRollItemInfo(id);
-		if string.find(name ,"Hakkari Bijou") or string.find(name ,"Coin") then
+																		 
+		if string.find(name, "Hakkari Bijou") or string.find(name, "Coin") then
+			cfg = LPCONFIG.ZG
 			RollOnLoot(id, LPCONFIG.ZG);
-			local _, _, _, hex = GetItemQualityColor(quality)
-			DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex..RollReturn().." "..GetLootRollItemLink(id))
-			return
 		end
-		if string.find(name ,"Necrotic Rune") then
-			RollOnLoot(id, 2);
-			local _, _, _, hex = GetItemQualityColor(quality)
-			DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex.."GREED "..GetLootRollItemLink(id))
+	end
 
-			for i=1,STATICPOPUP_NUMDIALOGS do
-				local frame = getglobal("StaticPopup"..i)
-				if frame:IsShown() then
-					getglobal("StaticPopup"..i.."Button1"):Click();
-				end
-			end
 
-			return
+	if LPCONFIG.MC then	
+		if string.find(name, "Fiery Core") or string.find(name, "Lava Core") or string.find(name, "Blood of the Mountain") then
+			cfg = LPCONFIG.MC
+			RollOnLoot(id, LPCONFIG.MC);
+		end	
+	end
+	
+	if LPCONFIG.AQ then	
+		if string.find(name, "Scarab") or string.find(name, "Idol") then
+			cfg = LPCONFIG.AQ
+			RollOnLoot(id, LPCONFIG.AQ);
 		end
-		if string.find(name ,"Corrupted Sand") then
-			RollOnLoot(id, 2);
-			local _, _, _, hex = GetItemQualityColor(quality)
-			DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex.."GREED "..GetLootRollItemLink(id))
-
-			for i=1,STATICPOPUP_NUMDIALOGS do
-				local frame = getglobal("StaticPopup"..i)
-				if frame:IsShown() then
-					getglobal("StaticPopup"..i.."Button1"):Click();
-				end
-			end
-
-			return
-		end
+	end
+	
+	if LPCONFIG.AQMOUNT then	
+		if string.find(name, "Blue Qiraji Resonating") or string.find(name, "Green Qiraji Resonating") or string.find(name, "Yellow Qiraji Resonating") then
+			cfg = LPCONFIG.AQMOUNT
+			RollOnLoot(id, LPCONFIG.AQMOUNT);
+		end	
 	end	
+	
+	if LPCONFIG.SAND then	
+		if string.find(name ,"Corrupted Sand") then
+			cfg = LPCONFIG.SAND
+			RollOnLoot(id, LPCONFIG.SAND);
+		end
+	end
+
+	if LPCONFIG.NAXX then	
+		if string.find(name, "Wartorn") or string.find(name, "Thawing") then
+			cfg = LPCONFIG.NAXX
+			RollOnLoot(id, LPCONFIG.NAXX);
+		end	
+	end
+	
+	-- Hard coded auto need for Necrotic Runes
+	if string.find(name, "Necrotic Rune") then
+		cfg = 1
+		RollOnLoot(id, 1);
+	end
+	
+	-- Hard coded auto need for Runecloth, in Naxx only.
+	local t = GetRealZoneText()
+	if t = "Naxxramas" and string.find(name, "Runecloth") then
+		cfg = 1
+		RollOnLoot(id, 1);
+	end
+	
+	if LPCONFIG.ROLLMSG then
+		local _, _, _, hex = GetItemQualityColor(quality)
+		DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex..RollReturn(cfg).." "..GetLootRollItemLink(id))
+	end
+	
+	for i=1,STATICPOPUP_NUMDIALOGS do
+		local frame = getglobal("StaticPopup"..i)
+		if frame:IsShown() then
+			getglobal("StaticPopup"..i.."Button1"):Click();
+		end
+	end
+
+	return
 end
 
 function LazyPig_GreenRoll()
@@ -1667,13 +1726,29 @@ function LazyPig_GetOption(num)
 	if num == 00 and LPCONFIG.GREEN == 1
 	or num == 01 and LPCONFIG.GREEN == 2 
 	or num == 02 and LPCONFIG.GREEN == 0 
-	or num == 10 and LPCONFIG.ZG == 1		
-	or num == 11 and LPCONFIG.ZG == 2
-	or num == 12 and LPCONFIG.ZG == 0
-	or num == 20 and LPCONFIG.WORLDDUNGEON
-	or num == 21 and LPCONFIG.WORLDRAID
-	or num == 22 and LPCONFIG.WORLDBG
-	or num == 23 and LPCONFIG.WORLDUNCHECK
+	or num == 03 and LPCONFIG.ZG == 1		
+	or num == 04 and LPCONFIG.ZG == 2
+	or num == 05 and LPCONFIG.ZG == 0
+	or num == 06 and LPCONFIG.MC == 1
+	or num == 07 and LPCONFIG.MC == 2
+	or num == 08 and LPCONFIG.MC == 0
+	or num == 09 and LPCONFIG.AQ == 1
+	or num == 10 and LPCONFIG.AQ == 2
+	or num == 11 and LPCONFIG.AQ == 0
+	or num == 12 and LPCONFIG.AQMOUNT == 1
+	or num == 13 and LPCONFIG.AQMOUNT == 2
+	or num == 14 and LPCONFIG.AQMOUNT == 0
+	or num == 15 and LPCONFIG.SAND == 1
+	or num == 16 and LPCONFIG.SAND == 2
+	or num == 17 and LPCONFIG.SAND == 0
+	or num == 18 and LPCONFIG.NAXX == 1
+	or num == 19 and LPCONFIG.NAXX == 2
+	or num == 20 and LPCONFIG.NAXX == 0
+	or num == 21 and LPCONFIG.ROLLMSG
+	or num == 22 and LPCONFIG.WORLDDUNGEON
+	or num == 23 and LPCONFIG.WORLDRAID
+	or num == 24 and LPCONFIG.WORLDBG
+	or num == 25 and LPCONFIG.WORLDUNCHECK
 	or num == 30 and LPCONFIG.GINV
 	or num == 31 and LPCONFIG.FINV
 	or num == 32 and LPCONFIG.SINV
@@ -1734,46 +1809,124 @@ function LazyPig_SetOption(num)
 		if not checked then LPCONFIG.GREEN = nil end
 		LazyPigMenuObjects[00]:SetChecked(nil)
 		LazyPigMenuObjects[01]:SetChecked(nil)
-	elseif num == 10 then 
+	elseif num == 03 then
 		LPCONFIG.ZG = 1
 		if not checked then LPCONFIG.ZG = nil end
-		LazyPigMenuObjects[11]:SetChecked(nil)
-		LazyPigMenuObjects[12]:SetChecked(nil)
-	elseif num == 11 then 
-		LPCONFIG.ZG= 2
+		LazyPigMenuObjects[04]:SetChecked(nil)
+		LazyPigMenuObjects[05]:SetChecked(nil)
+	elseif num == 04 then 
+		LPCONFIG.ZG = 2
 		if not checked then LPCONFIG.ZG = nil end
-		LazyPigMenuObjects[10]:SetChecked(nil)
-		LazyPigMenuObjects[12]:SetChecked(nil)
-	elseif num == 12 then 
-		LPCONFIG.ZG = 0 
+		LazyPigMenuObjects[03]:SetChecked(nil)
+		LazyPigMenuObjects[05]:SetChecked(nil)
+	elseif num == 05 then
+		LPCONFIG.ZG = 0
 		if not checked then LPCONFIG.ZG = nil end
+		LazyPigMenuObjects[03]:SetChecked(nil)
+		LazyPigMenuObjects[04]:SetChecked(nil)
+	elseif num == 06 then
+		LPCONFIG.MC = 1
+		if not checked then LPCONFIG.MC = nil end
+		LazyPigMenuObjects[07]:SetChecked(nil)
+		LazyPigMenuObjects[08]:SetChecked(nil)
+	elseif num == 07 then 
+		LPCONFIG.MC = 2
+		if not checked then LPCONFIG.MC = nil end
+		LazyPigMenuObjects[06]:SetChecked(nil)
+		LazyPigMenuObjects[08]:SetChecked(nil)
+	elseif num == 08 then
+		LPCONFIG.MC = 0
+		if not checked then LPCONFIG.MC = nil end
+		LazyPigMenuObjects[06]:SetChecked(nil)
+		LazyPigMenuObjects[07]:SetChecked(nil)	
+	elseif num == 09 then
+		LPCONFIG.AQ = 1
+		if not checked then LPCONFIG.AQ = nil end
 		LazyPigMenuObjects[10]:SetChecked(nil)
 		LazyPigMenuObjects[11]:SetChecked(nil)
-	elseif num == 20 then															
+	elseif num == 10 then 
+		LPCONFIG.AQ = 2
+		if not checked then LPCONFIG.AQ = nil end
+		LazyPigMenuObjects[09]:SetChecked(nil)
+		LazyPigMenuObjects[11]:SetChecked(nil)
+	elseif num == 11 then
+		LPCONFIG.AQ = 0
+		if not checked then LPCONFIG.AQ = nil end
+		LazyPigMenuObjects[09]:SetChecked(nil)
+		LazyPigMenuObjects[10]:SetChecked(nil)	
+	elseif num == 12 then
+		LPCONFIG.AQMOUNT = 1
+		if not checked then LPCONFIG.AQMOUNT = nil end
+		LazyPigMenuObjects[13]:SetChecked(nil)
+		LazyPigMenuObjects[14]:SetChecked(nil)
+	elseif num == 13 then 
+		LPCONFIG.AQMOUNT = 2
+		if not checked then LPCONFIG.AQMOUNT = nil end
+		LazyPigMenuObjects[12]:SetChecked(nil)
+		LazyPigMenuObjects[14]:SetChecked(nil)
+	elseif num == 14 then
+		LPCONFIG.AQMOUNT = 0
+		if not checked then LPCONFIG.AQMOUNT = nil end
+		LazyPigMenuObjects[12]:SetChecked(nil)
+		LazyPigMenuObjects[13]:SetChecked(nil)
+	elseif num == 15 then
+		LPCONFIG.SAND = 1
+		if not checked then LPCONFIG.SAND = nil end
+		LazyPigMenuObjects[16]:SetChecked(nil)
+		LazyPigMenuObjects[17]:SetChecked(nil)
+	elseif num == 16 then 
+		LPCONFIG.SAND = 2
+		if not checked then LPCONFIG.SAND = nil end
+		LazyPigMenuObjects[15]:SetChecked(nil)
+		LazyPigMenuObjects[17]:SetChecked(nil)
+	elseif num == 17 then
+		LPCONFIG.SAND = 0
+		if not checked then LPCONFIG.SAND = nil end
+		LazyPigMenuObjects[18]:SetChecked(nil)
+		LazyPigMenuObjects[19]:SetChecked(nil)	
+	elseif num == 18 then
+		LPCONFIG.NAXX = 1
+		if not checked then LPCONFIG.NAXX = nil end
+		LazyPigMenuObjects[19]:SetChecked(nil)
+		LazyPigMenuObjects[20]:SetChecked(nil)
+	elseif num == 19 then 
+		LPCONFIG.NAXX = 2
+		if not checked then LPCONFIG.NAXX = nil end
+		LazyPigMenuObjects[18]:SetChecked(nil)
+		LazyPigMenuObjects[20]:SetChecked(nil)
+	elseif num == 20 then
+		LPCONFIG.NAXX = 0
+		if not checked then LPCONFIG.NAXX = nil end
+		LazyPigMenuObjects[18]:SetChecked(nil)
+		LazyPigMenuObjects[19]:SetChecked(nil)	
+	elseif num == 21 then 
+		LPCONFIG.ROLLMSG = true
+		if not checked then LPCONFIG.ROLLMSG = nil end		
+	elseif num == 22 then															
 		LPCONFIG.WORLDDUNGEON = true					--fixed
 		if not checked then LPCONFIG.WORLDDUNGEON = nil end
 		if LPCONFIG.WORLDDUNGEON or LPCONFIG.WORLDRAID or LPCONFIG.WORLDBG then 
 			LPCONFIG.WORLDUNCHECK = nil
-			LazyPigMenuObjects[23]:SetChecked(nil)
+			LazyPigMenuObjects[25]:SetChecked(nil)
 		end
 		LazyPig_ZoneCheck()
-	elseif num == 21 then 
+	elseif num == 23 then 
 		LPCONFIG.WORLDRAID = true
 		if not checked then LPCONFIG.WORLDRAID = nil end
 		if LPCONFIG.WORLDDUNGEON or LPCONFIG.WORLDRAID or LPCONFIG.WORLDBG then 
 			LPCONFIG.WORLDUNCHECK = nil
-			LazyPigMenuObjects[23]:SetChecked(nil)
+			LazyPigMenuObjects[25]:SetChecked(nil)
 		end
 		LazyPig_ZoneCheck()
-	elseif num == 22 then 
+	elseif num == 24 then 
 		LPCONFIG.WORLDBG = true
 		if not checked then LPCONFIG.WORLDBG = nil end
 		if LPCONFIG.WORLDDUNGEON or LPCONFIG.WORLDRAID or LPCONFIG.WORLDBG then 
 			LPCONFIG.WORLDUNCHECK = nil
-			LazyPigMenuObjects[23]:SetChecked(nil)
+			LazyPigMenuObjects[25]:SetChecked(nil)
 		end
 		LazyPig_ZoneCheck()
-	elseif num == 23 then 
+	elseif num == 25 then 
 		LPCONFIG.WORLDUNCHECK = true
 		if not checked then 
 			LPCONFIG.WORLDUNCHECK = nil
@@ -1781,9 +1934,11 @@ function LazyPig_SetOption(num)
 			LPCONFIG.WORLDDUNGEON = nil
 			LPCONFIG.WORLDRAID = nil
 			LPCONFIG.WORLDBG = nil
-			LazyPigMenuObjects[20]:SetChecked(nil)
-			LazyPigMenuObjects[21]:SetChecked(nil)
+										 
+										 
 			LazyPigMenuObjects[22]:SetChecked(nil)
+			LazyPigMenuObjects[23]:SetChecked(nil)
+			LazyPigMenuObjects[24]:SetChecked(nil)
 		end
 		LazyPig_ZoneCheck()
 	elseif num == 30 then 								--fixed
@@ -2080,7 +2235,8 @@ function LazyPig_ChatFrame_OnEvent(event)
 	if event == "CHAT_MSG_LOOT" or event == "CHAT_MSG_MONEY" then
 		local bijou = string.find(arg1 ,"Bijou")
 		local coin = string.find(arg1 ,"Coin")
-
+		local idol = string.find(arg1, "Idol")
+		local scarab = string.find(arg1, "Scarab")
 		local green_roll = greenrolltime > GetTime()
 		local check_uncommon = LPCONFIG.SPAM_UNCOMMON and string.find(arg1 ,"1eff00")
 		local check_rare = LPCONFIG.SPAM_RARE and string.find(arg1 ,"0070dd")
@@ -2089,10 +2245,11 @@ function LazyPig_ChatFrame_OnEvent(event)
 	
 		local check1 = string.find(arg1 ,"You")
 		local check2 = string.find(arg1 ,"won") or string.find(arg1 ,"receive")
-		local check3 = LPCONFIG.ZG and (bijou or coin)
-		local check4 = check1 and not check3 and not green_roll or check2 
+		local check3 = LPCONFIG.AQ and (idol or scarab)
+		local check4 = LPCONFIG.ZG and (bijou or coin)
+		local check5 = check1 and not check4 and not check3 and not green_roll or check2 
 
-		if not check4 and (check_uncommon or check_rare) or check_loot and not check1 or check_money then
+		if not check5 and (check_uncommon or check_rare) or check_loot and not check1 or check_money then
 			return
 		end	
 	end
