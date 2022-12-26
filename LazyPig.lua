@@ -1015,7 +1015,7 @@ function LazyPig_AutoRoll(id)
 	
 	-- Hard coded auto need for Runecloth, in Naxx only.
 	local t = GetRealZoneText()
-	if t = "Naxxramas" and string.find(name, "Runecloth") then
+	if t == "Naxxramas" and string.find(name, "Runecloth") then
 		cfg = 1
 		RollOnLoot(id, 1);
 	end
