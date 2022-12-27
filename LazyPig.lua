@@ -547,7 +547,7 @@ function LazyPig_OnEvent(event)
 		LazyPig_EndSplit()	
 			
 	elseif(event == "START_LOOT_ROLL") then
-		--LazyPig_AutoRoll(arg1)
+		LazyPig_AutoRoll(arg1)
 	
 	elseif(event == "CHAT_MSG_LOOT") then
 		if (string.find(arg1 ,"You won") or string.find(arg1 ,"You receive")) and (string.find(arg1 ,"cffa335e") or string.find(arg1, "cff0070d") or string.find(arg1, "cffff840")) and not string.find(arg1 ,"Bijou") and not string.find(arg1 ,"Idol") and not string.find(arg1 ,"Shard") then
@@ -1020,7 +1020,7 @@ function LazyPig_AutoRoll(id)
 		RollOnLoot(id, 1);
 	end
 	
-	if LPCONFIG.ROLLMSG then
+	if LPCONFIG.ROLLMSG and type(cfg) == "number" then
 		local _, _, _, hex = GetItemQualityColor(quality)
 		DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex..RollReturn(cfg).." "..GetLootRollItemLink(id))
 	end
