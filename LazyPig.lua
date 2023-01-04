@@ -949,6 +949,7 @@ end
 
 function LazyPig_AutoRoll(id)
 	local cfg = ""
+	local zone = GetRealZoneText()
 	RollReturn = function(cfg)
 		local txt = ""
 		if cfg == 1 then
@@ -963,7 +964,7 @@ function LazyPig_AutoRoll(id)
 
 	local _, name, _, quality = GetLootRollItemInfo(id);
 
-	if LPCONFIG.ZG then	
+	if LPCONFIG.ZG and zone == "Zul'Gurub" then	
 																		 
 		if string.find(name, "Hakkari Bijou") or string.find(name, "Coin") then
 			cfg = LPCONFIG.ZG
@@ -972,21 +973,21 @@ function LazyPig_AutoRoll(id)
 	end
 
 
-	if LPCONFIG.MC then	
+	if LPCONFIG.MC and zone == "Molten Core" then	
 		if string.find(name, "Fiery Core") or string.find(name, "Lava Core") or string.find(name, "Blood of the Mountain") then
 			cfg = LPCONFIG.MC
 			RollOnLoot(id, LPCONFIG.MC);
 		end	
 	end
 	
-	if LPCONFIG.AQ then	
+	if LPCONFIG.AQ and string.find(zone,"Ahn'Qiraj") then	
 		if string.find(name, "Scarab") or string.find(name, "Idol") then
 			cfg = LPCONFIG.AQ
 			RollOnLoot(id, LPCONFIG.AQ);
 		end
 	end
 	
-	if LPCONFIG.AQMOUNT then	
+	if LPCONFIG.AQMOUNT and (zone == "Ruins of Ahn'Qiraj" or zone == "Temple of Ahn'Qiraj") then	
 		if string.find(name, "Blue Qiraji Resonating") or string.find(name, "Green Qiraji Resonating") or string.find(name, "Yellow Qiraji Resonating") then
 			cfg = LPCONFIG.AQMOUNT
 			RollOnLoot(id, LPCONFIG.AQMOUNT);
@@ -1000,7 +1001,7 @@ function LazyPig_AutoRoll(id)
 		end
 	end
 
-	if LPCONFIG.NAXX then	
+	if LPCONFIG.NAXX and zone == "Naxxramas" then	
 		if string.find(name, "Wartorn") or string.find(name, "Thawing") then
 			cfg = LPCONFIG.NAXX
 			RollOnLoot(id, LPCONFIG.NAXX);
@@ -1014,8 +1015,7 @@ function LazyPig_AutoRoll(id)
 	end
 	
 	-- Hard coded auto need for Runecloth, in Naxx only.
-	local t = GetRealZoneText()
-	if t == "Naxxramas" and string.find(name, "Runecloth") then
+	if zone == "Naxxramas" and string.find(name, "Runecloth") then
 		cfg = 1
 		RollOnLoot(id, 1);
 	end
