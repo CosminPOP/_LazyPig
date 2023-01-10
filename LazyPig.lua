@@ -290,6 +290,7 @@ function LazyPig_OnUpdate()
 							getglobal("StaticPopup"..i.."Button2"):Click();
 							if passpopup < current_time then delayaction = current_time + 0.5 end
 						elseif frame.which ~= "CONFIRM_SUMMON" and frame.which ~= "CONFIRM_BATTLEFIELD_ENTRY" and frame.which ~= "CAMP" and frame.which ~= "AREA_SPIRIT_HEAL"  then --and release and
+
 							getglobal("StaticPopup"..i.."Button1"):Click();
 							if passpopup < current_time then delayaction = current_time + 0.5 end
 						end
@@ -1027,7 +1028,7 @@ function LazyPig_AutoRoll(id)
 	
 	for i=1,STATICPOPUP_NUMDIALOGS do
 		local frame = getglobal("StaticPopup"..i)
-		if frame:IsShown() then
+		if frame:IsShown() and frame.which ~= "DEATH" then
 			getglobal("StaticPopup"..i.."Button1"):Click();
 		end
 	end
