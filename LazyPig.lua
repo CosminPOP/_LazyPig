@@ -1016,7 +1016,7 @@ function LazyPig_AutoRoll(id)
 	end
 	
 	-- Hard coded auto need for Runecloth, in Naxx only.
-	if zone == "Naxxramas" and string.find(name, "Runecloth") then
+	if zone == "Naxxramas" and (string.find(name, "Runecloth") or string.find(name, "Ironweb Spider Silk")) then
 		cfg = 1
 		RollOnLoot(id, 1);
 	end
@@ -1026,6 +1026,7 @@ function LazyPig_AutoRoll(id)
 		DEFAULT_CHAT_FRAME:AddMessage("LazyPig: Auto "..hex..RollReturn(cfg).." "..GetLootRollItemLink(id))
 	end
 	
+	-- Auto accept BoP for things that are auto rolled. Like Corrupted Sand and Necrotic Runes
 	for i=1,STATICPOPUP_NUMDIALOGS do
 		local frame = getglobal("StaticPopup"..i)
 		if frame:IsShown() and frame.which ~= "DEATH" then
