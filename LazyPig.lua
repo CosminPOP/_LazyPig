@@ -988,7 +988,7 @@ function LazyPig_AutoRoll(id)
 		end
 	end
 	
-	if LPCONFIG.AQMOUNT and (zone == "Ruins of Ahn'Qiraj" or zone == "Temple of Ahn'Qiraj") then	
+	if LPCONFIG.AQMOUNT and string.find(zone,"Ahn'Qiraj") then	
 		if string.find(name, "Blue Qiraji Resonating") or string.find(name, "Green Qiraji Resonating") or string.find(name, "Yellow Qiraji Resonating") then
 			cfg = LPCONFIG.AQMOUNT
 			RollOnLoot(id, LPCONFIG.AQMOUNT);
