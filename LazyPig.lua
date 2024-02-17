@@ -560,6 +560,9 @@ function LazyPig_OnEvent(event)
 			UIErrorsFrame:Clear()
 			LazyPig_Dismount()
 		end
+		if(string.find(arg1, "You are in shapeshift form")) then
+			LazyPig_CancelShapeshiftBuff()
+		end
 	elseif (event == "UI_INFO_MESSAGE") then
 		if string.find(arg1 ,"Duel cancelled") then
 			duel_active = nil
@@ -2183,6 +2186,18 @@ function LazyPig_IsShieldEquipped()
 		end
 	end
 	return false
+end
+
+function LazyPig_CancelShapeshiftBuff()
+	local i;
+	local max = GetNumShapeshiftForms();
+	for i = 1 , max do
+		local _, name, isActive = GetShapeshiftFormInfo(i);
+		if(isActive and LazyPig_PlayerClass("Druid", "player")) then
+			CastShapeshiftForm(i)
+			return
+		end
+	end
 end
 
 function LazyPig_CancelSalvationBuff()
