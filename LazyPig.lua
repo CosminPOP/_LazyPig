@@ -2212,26 +2212,30 @@ function LazyPig_CancelShapeshiftBuff()
 end
 
 function LazyPig_CancelSalvationBuff()
-	local buff = {"Spell_Holy_SealOfSalvation", "Spell_Holy_GreaterBlessingofSalvation"}
-	local counter = 0
-	while GetPlayerBuff(counter) >= 0 do
-		local index, untilCancelled = GetPlayerBuff(counter)
-		if untilCancelled ~= 1 then
-			local i =1
-			while buff[i] do
-				if string.find(GetPlayerBuffTexture(index), buff[i]) then
-					CancelPlayerBuff(index);
-					UIErrorsFrame:Clear();
-					UIErrorsFrame:AddMessage("Salvation Removed");
-					return
-				end
-				i = i + 1
-			end	
-		end
-		counter = counter + 1
-	end
-	return nil
+    local buff = {"Spell_Holy_SealOfSalvation", "Spell_Holy_GreaterBlessingofSalvation"}
+    local counter = 0
+    while GetPlayerBuff(counter) >= 0 do
+        local index, untilCancelled = GetPlayerBuff(counter)
+        if untilCancelled ~= 1 then
+            local texture = GetPlayerBuffTexture(index)
+            if texture then  -- Check if texture is not nil
+                local i = 1
+                while buff[i] do
+                    if string.find(texture, buff[i]) then
+                        CancelPlayerBuff(index);
+                        UIErrorsFrame:Clear();
+                        UIErrorsFrame:AddMessage("Salvation Removed");
+                        return
+                    end
+                    i = i + 1
+                end
+            end
+        end
+        counter = counter + 1
+    end
+    return nil
 end
+
 
 function LazyPig_CheckSalvation()
 	if(LPCONFIG.SALVA == 1 or LPCONFIG.SALVA == 2 and (LazyPig_IsShieldEquipped() and LazyPig_PlayerClass("Warrior", "player") or LazyPig_IsBearForm())) then
