@@ -482,7 +482,7 @@ function LazyPig_OnEvent(event)
 
 	elseif (LPCONFIG.SALVA and (event == "PLAYER_AURAS_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" and LazyPig_PlayerClass("Druid", "player") or event == "UNIT_INVENTORY_CHANGED")) then
 		LazyPig_CheckSalvation()
-	elseif (LPCONFIG.REMOVEMANABUFFS and (event == "PLAYER_AURAS_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" and LazyPig_PlayerClass("Druid","player")or event == "UNIT_INVENTORY_CHANGED"))then
+	elseif (LPCONFIG.REMOVEMANABUFFS and (event == "PLAYER_AURAS_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" and LazyPig_PlayerClass("Druid", "player") or event == "UNIT_INVENTORY_CHANGED"))then
 		LazyPig_CheckManaBuffs()
 		
 	elseif(event == "DUEL_REQUESTED") then
@@ -2249,16 +2249,19 @@ function LazyPig_CancelManaBuffs()
 	while GetPlayerBuff(counter) >= 0 do
 		local index, untilCancelled = GetPlayerBuff(counter)
 		if untilCancelled ~= 1 then
-			local i =1
-			while buff[i] do
-				if string.find(GetPlayerBuffTexture(index), buff[i]) then
-					CancelPlayerBuff(index);
-					UIErrorsFrame:Clear();
-					UIErrorsFrame:AddMessage("Intellect or Wisdom or Spirit Removed");
-					return
+			local texture = GetPlayerBuffTexture(index)
+			if texture then  -- Check if texture is not nil
+				local i = 1
+				while buff[i] do
+					if string.find(texture, buff[i]) then
+						CancelPlayerBuff(index);
+						UIErrorsFrame:Clear();
+						UIErrorsFrame:AddMessage("Intellect or Wisdom or Spirit Removed");
+						return
+					end
+					i = i + 1
 				end
-				i = i + 1
-			end	
+			end
 		end
 		counter = counter + 1
 	end
