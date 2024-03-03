@@ -224,8 +224,9 @@ function LazyPig_CreateOptionsFrame()
 
 	-- MenuTitle FontString
 	local fs_title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	local LP_VERSION = GetAddOnMetadata("_LazyPig", "Version")
 	fs_title:SetPoint("CENTER", frame.texture_title, "CENTER", 0, 12)
-	fs_title:SetText("LazyPig Options v6.0.0")
+	fs_title:SetText("LazyPig Options v6.0.3")
 
 	frame.fs_title = fs_title
 
