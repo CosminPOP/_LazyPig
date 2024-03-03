@@ -71,6 +71,11 @@ local CheckBoxTables = {
 		[1] = { "LazyPigCheckbox60", "Always" },
 		[2] = { "LazyPigCheckbox61", "Warrior Shield/Druid Bear" },
 	},
+
+	["Mana Buff Remover (Spirit, Int, Wis)"] = {
+		[0] = "LazyPigCheckBoxGroupManaBuffRemover",
+		[1] = {"LazyPigCheckbox62","Always"}
+	},
 	
 	["Nameplates Display Rules"] = {
 		[0] = "LazyPigCheckboxGroupNameplates",
@@ -287,6 +292,9 @@ function LazyPig_CreateOptionsFrame()
 	
 	local str = "Smart Salvation Remover"
 	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 250, -45, str, CheckBoxTables[str])
+
+	local str = "Mana Buff Remover (Spirit, Int, Wis)"
+	frame.cbgroup_salvationremover = CheckBoxGroup(frame,450,-250,str,CheckBoxTables[str])
 	
 	local str = "Group Invite Accept Rules"
 	frame.cbgroup_groupinvite = CheckBoxGroup(frame, 250, -92, str, CheckBoxTables[str])

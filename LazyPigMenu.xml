@@ -1247,6 +1247,26 @@
 				</OnClick>
 			</Scripts>
 		</CheckButton>
+
+				<!-- Int/Wisdom/spirit remover -->
+		</CheckButton>
+				<CheckButton name="LazyPigCheckbox62" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigCheckbox102">
+					<Offset>
+						<AbsDimension x="20" y="0" />						
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(62);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(62);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
 		
 			
 		<Button name="LazyPigClose" inherits="GameMenuButtonTemplate" text="Close">
