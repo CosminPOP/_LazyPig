@@ -1326,7 +1326,7 @@ end
 
 function LazyPig_Raid()
 	local t = GetRealZoneText()
-	if t =="Molten Core" or t =="Blackwing Lair" or t =="Zul'Gurub" or t =="Ahn'Qiraj" or t =="Onyxia's Lair" or t =="Ruins of Ahn'Qiraj" or t =="Temple of Ahn'Qiraj" or t =="Naxxramas" or t =="Blackrock Spire" then
+	if t =="Molten Core" or t =="Blackwing Lair" or t =="Zul'Gurub" or t =="Ahn'Qiraj" or t =="Onyxia's Lair" or t =="Ruins of Ahn'Qiraj" or t =="Temple of Ahn'Qiraj" or t =="Naxxramas" or t =="Blackrock Spire" or t =="Emerald Sanctum" or t =="Lower Karazhan Halls" or t == "Upper Karazhan Halls" then
 		return true
 	end
 	return false
@@ -1334,7 +1334,7 @@ end
 
 function LazyPig_Dungeon()
 	local t = GetRealZoneText()
-	if t =="Dire Maul" or t =="Stratholme"  or t =="Scholomance" or t =="Blackrock Depths" or t =="Sunken Temple" or t =="The Stockade" or t =="Zul'Farrak" or t =="Scarlet Monastery" or t =="Gnomeregan" or t =="The Deadmines" or t=="Blackfathom Deeps" or t=="Wailing Caverns" or t=="Razorfen Downs" or t=="Razorfen Kraul" then 
+	if t =="Dire Maul" or t =="Stratholme"  or t =="Scholomance" or t =="Blackrock Depths" or t =="Sunken Temple" or t =="The Stockade" or t =="Zul'Farrak" or t =="Scarlet Monastery" or t =="Gnomeregan" or t =="The Deadmines" or t=="Blackfathom Deeps" or t=="Wailing Caverns" or t=="Razorfen Downs" or t=="Razorfen Kraul" or t=="Gilneas City" or t=="Crescent Grove" or = t=="Hateforge Quarry" then 
 		return true
 	end
 	return false
