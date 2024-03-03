@@ -108,3 +108,5 @@ New in 4.56
 New in 5.00
 - Block Battleground Quest Share feature(no more Empty Stables)
 - Brand New GUI made by mrmr thx bro
+New in 5.01
+-added auto mana buff remover (Intellect, Spirit, Wisdom).

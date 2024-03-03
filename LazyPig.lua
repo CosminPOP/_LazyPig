@@ -38,7 +38,8 @@ LPCONFIG = {
 	SHIFTSPLIT = true, 
 	REZ = true, 
 	GOSSIP = true, 
-	SALVA = false
+	SALVA = false,
+	REMOVEMANABUFFS = false
 }
 
 BINDING_HEADER_LP_HEADER = "_LazyPig";
@@ -164,6 +165,7 @@ local LazyPigMenuStrings = {
 		
 		[60]= "Always",
 		[61]= "Warrior Shield/Druid Bear",
+		[62] = "Remove Wis/Int/Spirit",
 		
 		[70]= "Players' Spam",
 		[71]= "Uncommon Roll",
@@ -367,6 +369,7 @@ function LazyPig_OnUpdate()
 	end
 	
 	LazyPig_CheckSalvation();
+	LazyPig_CheckManaBuffs();
 	ScheduleButtonClick();
 	ScheduleFunctionLaunch();
 	ScheduleItemSplit();
@@ -458,6 +461,7 @@ function LazyPig_OnEvent(event)
 		LazyPigKeybindsFrame = LazyPig_CreateKeybindsFrame()
 
 		LazyPig_CheckSalvation();
+		LazyPig_CheckManaBuffs();
 		Check_Bg_Status();
 		LazyPig_AutoLeaveBG();
 		LazyPig_AutoSummon();
@@ -478,6 +482,8 @@ function LazyPig_OnEvent(event)
 
 	elseif (LPCONFIG.SALVA and (event == "PLAYER_AURAS_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" and LazyPig_PlayerClass("Druid", "player") or event == "UNIT_INVENTORY_CHANGED")) then
 		LazyPig_CheckSalvation()
+	elseif (LPCONFIG.REMOVEMANABUFFS and (event == "PLAYER_AURAS_CHANGED" or event == "UPDATE_BONUS_ACTIONBAR" and LazyPig_PlayerClass("Druid","player")or event == "UNIT_INVENTORY_CHANGED"))then
+		LazyPig_CheckManaBuffs()
 		
 	elseif(event == "DUEL_REQUESTED") then
 		duel_active = true
@@ -1770,6 +1776,7 @@ function LazyPig_GetOption(num)
 	
 	or num == 60 and LPCONFIG.SALVA == 1
 	or num == 61 and LPCONFIG.SALVA == 2
+	or num == 62 and LPCONFIG.REMOVEMANABUFFS == 1
 	or num == 90 and LPCONFIG.SUMM
 	
 	or num == 70 and LPCONFIG.SPAM
@@ -2012,7 +2019,11 @@ function LazyPig_SetOption(num)
 		if not checked then LPCONFIG.SALVA = nil end
 		LazyPigMenuObjects[60]:SetChecked(nil)
 		LazyPig_CheckSalvation()
-		
+
+	elseif num == 62 then
+		LPCONFIG.REMOVEMANABUFFS = 1
+		if not checked then LPCONFIG.REMOVEMANABUFFS = nil end
+		LazyPig_CheckManaBuffs()		
 		
 		
 		
@@ -2225,6 +2236,34 @@ end
 function LazyPig_CheckSalvation()
 	if(LPCONFIG.SALVA == 1 or LPCONFIG.SALVA == 2 and (LazyPig_IsShieldEquipped() and LazyPig_PlayerClass("Warrior", "player") or LazyPig_IsBearForm())) then
 		LazyPig_CancelSalvationBuff()
+	end
+end
+
+function LazyPig_CancelManaBuffs()
+	local buff = {"Spell_Holy_SealOfWisdom", "Spell_Holy_GreaterBlessingofWisdom","Spell_Holy_ArcaneIntellect","Spell_Holy_MagicalSentry","Spell_Holy_PrayerofSpirit","Spell_Holy_DivineSpirit"}
+	local counter = 0
+	while GetPlayerBuff(counter) >= 0 do
+		local index, untilCancelled = GetPlayerBuff(counter)
+		if untilCancelled ~= 1 then
+			local i =1
+			while buff[i] do
+				if string.find(GetPlayerBuffTexture(index), buff[i]) then
+					CancelPlayerBuff(index);
+					UIErrorsFrame:Clear();
+					UIErrorsFrame:AddMessage("Intellect or Wisdom or Spirit Removed");
+					return
+				end
+				i = i + 1
+			end	
+		end
+		counter = counter + 1
+	end
+	return nil
+end
+
+function LazyPig_CheckManaBuffs()
+	if(LPCONFIG.REMOVEMANABUFFS == 1) then
+		LazyPig_CancelManaBuffs()
 	end
 end
 
