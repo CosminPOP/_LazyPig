@@ -166,6 +166,7 @@ local LazyPigMenuStrings = {
 		[60]= "Always",
 		[61]= "Warrior Shield/Druid Bear",
 		[62] = "Remove Wis/Int/Spirit",
+		[63] = "Remove Aspect of the Wolf",
 		
 		[70]= "Players' Spam",
 		[71]= "Uncommon Roll",
@@ -254,7 +255,7 @@ function LazyPig_OnUpdate()
 		elseif not battleframe then
 			battleframe = current_time
 		elseif (current_time - battleframe) > 3 then
-			BattlefieldFrame:Show()
+			--BattlefieldFrame:Show()
 			battleframe = current_time
 		end
 	elseif battleframe then
@@ -569,6 +570,9 @@ function LazyPig_OnEvent(event)
 		if(string.find(arg1, "You are in shapeshift form")) then
 			LazyPig_CancelShapeshiftBuff()
 		end
+		if(string.find(arg1, "Can't use that in this Aspect.")) then
+			LazyPig_CancelAspect()
+		end
 	elseif (event == "UI_INFO_MESSAGE") then
 		if string.find(arg1 ,"Duel cancelled") then
 			duel_active = nil
@@ -659,7 +663,7 @@ function LazyPig_OnEvent(event)
 				gossipbreak = true
 			elseif (GossipOptions[i] == "trainer" and dsc == "Reset my talents.") then
 				gossipbreak = false
-			elseif (GossipOptions[i] == "trainer" or GossipOptions[i] == "vendor" and processgossip or GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip) or GossipOptions[i] == "gossip" and (IsAltKeyDown() or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core") and processgossip)) then
+			elseif (GossipOptions[i] == "trainer" or GossipOptions[i] == "vendor" and processgossip or GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip) or GossipOptions[i] == "gossip" or GossipOptions[i] == "petition" and (IsAltKeyDown() or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core") and processgossip)) then
 				gossipnr = i
 			elseif GossipOptions[i] == "taxi" and processgossip then
 				gossipnr = i
@@ -1776,7 +1780,11 @@ function LazyPig_GetOption(num)
 	
 	or num == 60 and LPCONFIG.SALVA == 1
 	or num == 61 and LPCONFIG.SALVA == 2
+
 	or num == 62 and LPCONFIG.REMOVEMANABUFFS == 1
+
+	or num == 63 and LPCONFIG.ASPECT
+
 	or num == 90 and LPCONFIG.SUMM
 	
 	or num == 70 and LPCONFIG.SPAM
@@ -2019,15 +2027,14 @@ function LazyPig_SetOption(num)
 		if not checked then LPCONFIG.SALVA = nil end
 		LazyPigMenuObjects[60]:SetChecked(nil)
 		LazyPig_CheckSalvation()
-
 	elseif num == 62 then
 		LPCONFIG.REMOVEMANABUFFS = 1
 		if not checked then LPCONFIG.REMOVEMANABUFFS = nil end
 		LazyPig_CheckManaBuffs()		
-		
-		
-		
-		
+	elseif num == 63 then
+		LPCONFIG.ASPECT = true
+		if not checked then LPCONFIG.ASPECT = nil end
+		LazyPig_CancelAspect()
 	elseif num == 70 then --fixed
 		LPCONFIG.SPAM = true
 		if not checked then LPCONFIG.SPAM = nil end
@@ -2189,7 +2196,7 @@ function LazyPig_IsShieldEquipped()
 	local link = GetInventoryItemLink("player", slot)
 	if link  then
 		local found, _, id, name = string.find(link, "item:(%d+):.*%[(.*)%]")
-		if found then
+		if found and id then
 			local _,_,_,_,_,itemType = GetItemInfo(tonumber(id))
 			if(itemType == "Shields") then
 				return true
@@ -2209,6 +2216,32 @@ function LazyPig_CancelShapeshiftBuff()
 			return
 		end
 	end
+end
+
+function LazyPig_CancelAspect()
+	if LPCONFIG.ASPECT == nil then return end
+    local buff = {"Ability_Mount_WhiteDireWolf"}
+    local counter = 0
+    while GetPlayerBuff(counter) >= 0 do
+        local index, untilCancelled = GetPlayerBuff(counter)
+        if untilCancelled == 1 then
+            local texture = GetPlayerBuffTexture(index)
+            if texture then  -- Check if texture is not nil
+                local i = 1
+                while buff[i] do
+                    if string.find(texture, buff[i]) then
+                        CancelPlayerBuff(index);
+                        UIErrorsFrame:Clear();
+                        UIErrorsFrame:AddMessage("Aspect of the Wolf removed.");
+                        return
+                    end
+                    i = i + 1
+                end
+            end
+        end
+        counter = counter + 1
+    end
+    return nil
 end
 
 function LazyPig_CancelSalvationBuff()

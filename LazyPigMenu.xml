@@ -1017,7 +1017,24 @@
 			</Scripts>
 		</CheckButton>
 
-		
+		<!--  Aspect of the Wolf -->
+		<CheckButton name="LazyPigCheckbox63" inherits="LazyPigCheckboxTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="LazyPigText6">
+					<Offset>
+						<AbsDimension x="20" y="-45" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnShow>
+					LazyPig_GetOption(63);
+				</OnShow>
+				<OnClick>
+					LazyPig_SetOption(63);
+				</OnClick>
+			</Scripts>
+		</CheckButton>
 		
 		
 		

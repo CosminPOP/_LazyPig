@@ -76,6 +76,11 @@ local CheckBoxTables = {
 		[0] = "LazyPigCheckBoxGroupManaBuffRemover",
 		[1] = {"LazyPigCheckbox62","Always"}
 	},
+
+	["Aspect of the Wolf"] = {
+		[0] = "LazyPigCheckBoxGroupAspect",
+		[1] = { "LazyPigCheckbox63", "Remove Aspect of the Wolf", "Remove Wolf when attempting to shoot." },
+	},
 	
 	["Nameplates Display Rules"] = {
 		[0] = "LazyPigCheckboxGroupNameplates",
@@ -103,7 +108,7 @@ local CheckBoxTables = {
 		[7] = { "LazyPigCheckbox96", "Duel Auto Decline (Shift to ByPass)" },
 		[8] = { "LazyPigCheckbox97", "Instance Resurrection Accept OOC", "Auto Accept Resurrection if OutOfCombat" },
 		[9] = { "LazyPigCheckbox98", "Gossip Auto Processing", "Skip Gossip-Windows-Choises from Innkeepers and FlyMasters" },
-		[10] = { "LazyPigCheckbox99", "Character Auto-Save", "Use the .save command when....when?" },
+		--[10] = { "LazyPigCheckbox99", "Character Auto-Save", "Use the .save command when....when?" },
 		[11] = { "LazyPigCheckbox100", "Auto Dismount", "Auto-Dismount when it's required by another action" },
 		--[12] = { "LazyPigCheckbox101", "Chat Spam Filter", "One minute ban for identical messages" },
 		--[12] = { "LazyPigCheckbox102", "Block Battleground Quest Sharing", "Really? No more 'Stable' spam?" }
@@ -289,13 +294,9 @@ function LazyPig_CreateOptionsFrame()
 	local str = "Naxx Roll Automation"
 	frame.cbgroup_sand = CheckBoxGroup(frame, 20, -405, str, CheckBoxTables[str])
 	
-	
 	local str = "Smart Salvation Remover"
 	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 250, -45, str, CheckBoxTables[str])
 
-	local str = "Mana Buff Remover (Spirit, Int, Wis)"
-	frame.cbgroup_salvationremover = CheckBoxGroup(frame,450,-250,str,CheckBoxTables[str])
-	
 	local str = "Group Invite Accept Rules"
 	frame.cbgroup_groupinvite = CheckBoxGroup(frame, 250, -92, str, CheckBoxTables[str])
 
@@ -305,16 +306,20 @@ function LazyPig_CreateOptionsFrame()
 	local str = "Nameplates Display Rules"
 	frame.cbgroup_nameplates = CheckBoxGroup(frame, 250, -272, str, CheckBoxTables[str])
 	
-
 	local str = "Single Choice Rules"
 	frame.cbgroup_singlechoise = CheckBoxGroup(frame, 250, -338, str, CheckBoxTables[str])
-	
 	
 	local str = "World Chat Mute"
 	frame.cbgroup_worldchatmute = CheckBoxGroup(frame, 450, -45, str, CheckBoxTables[str])
 	
 	local str = "Chat Filter"
-	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 450, -125, str, CheckBoxTables[str])
+	frame.cbgroup_chatfilter = CheckBoxGroup(frame, 450, -125, str, CheckBoxTables[str])
+
+	local str = "Mana Buff Remover (Spirit, Int, Wis)"
+	frame.cbgroup_manabuffremover = CheckBoxGroup(frame,450,-220,str,CheckBoxTables[str])
+
+	local str = "Aspect of the Wolf"
+	frame.cbgroup_aspectremover = CheckBoxGroup(frame,450,-255,str,CheckBoxTables[str])
 
 	return frame
 
