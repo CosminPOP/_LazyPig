@@ -55,6 +55,20 @@ local CheckBoxTables = {
 		[3] = { "LazyPigCheckbox24", "Battlegrounds" },
 		[4] = { "LazyPigCheckbox25", "Mute Permanently", "Mute the WorldChannel for good..."}
 	},
+	
+	["BWL Sand/Ore Roll Automation"] = {
+		[0] = "LazyPigCheckboxGroupBWLRoll",
+		[1] = { "LazyPigCheckbox26", "Need" },
+		[2] = { "LazyPigCheckbox27", "Greed" },
+		[3] = { "LazyPigCheckbox28", "Pass" }
+	},
+	
+	["Common Quality Tailoring (Silks and Cloth)"] = {
+		[0] = "LazyPigCheckboxGroupTailoringRoll",
+		[1] = { "LazyPigCheckbox102", "Need" },
+		[2] = { "LazyPigCheckbox103", "Greed" },
+		[3] = { "LazyPigCheckbox104", "Pass" }
+	},
 
 	["Battlegrounds Automation"] = {
 		[0] = "LazyPigCheckboxGroupBGAutomation",
@@ -186,7 +200,7 @@ function LazyPig_CreateOptionsFrame()
 	frame:SetScale(.81)
 
 	frame:SetWidth(630)
-	frame:SetHeight(528)
+	frame:SetHeight(633)
 	
 	frame:SetPoint("TOPLEFT", nil, "TOPLEFT", 250, -50)
 	frame:SetBackdrop( {
@@ -236,7 +250,7 @@ function LazyPig_CreateOptionsFrame()
 	local fs_title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	local LP_VERSION = GetAddOnMetadata("_LazyPig", "Version")
 	fs_title:SetPoint("CENTER", frame.texture_title, "CENTER", 0, 12)
-	fs_title:SetText("LazyPig Options v6.0.3")
+	fs_title:SetText("LazyPig Options v" .. LP_VERSION)
 
 	frame.fs_title = fs_title
 
@@ -293,7 +307,13 @@ function LazyPig_CreateOptionsFrame()
 	
 	local str = "Naxx Roll Automation"
 	frame.cbgroup_sand = CheckBoxGroup(frame, 20, -405, str, CheckBoxTables[str])
-	
+
+	local str = "BWL Sand/Ore Roll Automation"
+	frame.cbgroup_sand = CheckBoxGroup(frame, 20, -465, str, CheckBoxTables[str])
+
+	local str = "Common Quality Tailoring (Silks and Cloth)"
+	frame.cbgroup_sand = CheckBoxGroup(frame, 20, -525, str, CheckBoxTables[str])
+
 	local str = "Smart Salvation Remover"
 	frame.cbgroup_salvationremover = CheckBoxGroup(frame, 250, -45, str, CheckBoxTables[str])
 
