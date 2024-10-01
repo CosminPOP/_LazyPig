@@ -5,7 +5,6 @@ This mod is mostly for lazy people:
 
 
 PASSIVE ENHANCEMENTS:
-CHARACTER AUTO SAVE 	          	- save character's data after receiving rare/epic/legendary item, finishing bg 
 AUTO DISMOUNT 				- when casting spell or interacting with flightmaster(aq40 mounts included)
 AUTO ZG ROLL 				- on bijou, coins(avaliable 4 modes: off, pass, greed, need)
 LOOT WINDOW AUTO POSITION		- under the cursor when looting
