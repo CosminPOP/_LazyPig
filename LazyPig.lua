@@ -29,7 +29,6 @@ LPCONFIG = {
 	ES_SHARDS = 0,
 	ROLLMSG = true,
 	DUEL = false, 
-	NOSAVE = false, 
 	GREEN = 2, 
 	SPECIALKEY = true, 
 	WORLDDUNGEON = false, 
@@ -70,8 +69,6 @@ local last_click = 0
 local delayaction = 0
 local tradedelay = 0
 local bgstatus = 0
-local save_check = 0
-local save_time = 0
 local tmp_splitval = 1
 local passpopup = 0
 
@@ -190,7 +187,6 @@ local LazyPigMenuStrings = {
 		[96]= "Duel Auto Decline (Shift to ByPass)",
 		[97]= "Instance Resurrection Accept OOC",
 		[98]= "Gossip Auto Processing",
-		[99]= "Character Auto-Save",
 		[100]= "Auto Dismount",
 		[101]= "Chat Spam Filter",
 		[102]= "Need",
@@ -373,12 +369,6 @@ function LazyPig_OnUpdate()
 		roster_task_refresh = current_time
 		GuildRoster();
 		ChatSpamClean();
-	end
-	
-	if save_time ~= 0 and (current_time - save_time) > 3 and not GetBattlefieldWinner() and not UnitAffectingCombat("player") then	
-		save_check = current_time
-		save_time = 0
-		SaveData();
 	end
 	
 	if player_summon_confirm then
@@ -575,7 +565,6 @@ function LazyPig_OnEvent(event)
 	
 	elseif(event == "CHAT_MSG_LOOT") then
 		if (string.find(arg1 ,"You won") or string.find(arg1 ,"You receive")) and (string.find(arg1 ,"cffa335e") or string.find(arg1, "cff0070d") or string.find(arg1, "cffff840")) and not string.find(arg1 ,"Bijou") and not string.find(arg1 ,"Idol") and not string.find(arg1 ,"Shard") then
-			save_time = GetTime()
 		end
 	
 	elseif(event == "UI_ERROR_MESSAGE") then
@@ -607,11 +596,7 @@ function LazyPig_OnEvent(event)
 		elseif(string.find(arg1, string.sub(MARKED_AFK, 1, string.len(MARKED_AFK) -2))) then
 			afk_active = true
 			if LPCONFIG.EBG and not LazyPig_Raid() and not LazyPig_Dungeon() then UIErrorsFrame:AddMessage("Auto Join BG Inactive - AFK") end
-		
-		elseif string.find(arg1, "There is no such command") and (GetTime() - save_check) < 1 then
-			LPCONFIG.NOSAVE = GetRealmName()
-			DEFAULT_CHAT_FRAME:AddMessage("LazyPig:"..RED.."Auto Save Disabled - Command not Supported");		
-		
+
 		elseif LPCONFIG.AQUE and string.find(arg1 ,"Queued") and UnitIsPartyLeader("player") then
 			if UnitInRaid("player") then
 				SendChatMessage(arg1, "RAID");
@@ -943,21 +928,12 @@ function LazyPig_AutoLeaveBG()
 		local bg_winner = GetBattlefieldWinner()
 		local winner_name = "Alliance"
 		if bg_winner ~= nil then	
-			save_time = GetTime() + 15
 			if bg_winner == 0 then winner_name = "Horde" end
 			UIErrorsFrame:Clear();
 			UIErrorsFrame:AddMessage(winner_name.." Wins");
 			LeaveBattlefield();
 		end	
 	end
-end
-
-function SaveData()
-	if LPCONFIG.NOSAVE ~= GetRealmName() then	
-		SendChatMessage(".save", "SAY");
-		UIErrorsFrame:Clear()
-		UIErrorsFrame:AddMessage("Character Saved");
-	end	
 end
 
 function LazyPig_BagReturn(find)
@@ -1844,7 +1820,6 @@ function LazyPig_GetOption(num)
 	or num == 96 and LPCONFIG.DUEL		
 	or num == 97 and LPCONFIG.REZ
 	or num == 98 and LPCONFIG.GOSSIP
-	or num == 99 and LPCONFIG.NOSAVE ~= GetRealmName()
 	or num == 100 and LPCONFIG.DISMOUNT
 	or num == 101 and LPCONFIG.SPAM
 	or num == 102 and LPCONFIG.WHITE_TAILORING == 1
@@ -2147,9 +2122,6 @@ function LazyPig_SetOption(num)
 	elseif num == 98 then
 		LPCONFIG.GOSSIP = true
 		if not checked then LPCONFIG.GOSSIP = nil end
-	elseif num == 99 then
-		LPCONFIG.NOSAVE = true
-		if not checked then LPCONFIG.NOSAVE = GetRealmName() end
 	elseif num == 100 then
 		LPCONFIG.DISMOUNT = true
 		if not checked then LPCONFIG.DISMOUNT = nil end	
