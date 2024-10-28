@@ -985,9 +985,11 @@ function LazyPig_AutoRoll(id)
 	end
 	
 	if LPCONFIG.AQ and string.find(zone,"Ahn'Qiraj") then	
-		if string.find(name, "Scarab") or string.find(name, "Idol") then
-			cfg = LPCONFIG.AQ
-			RollOnLoot(id, LPCONFIG.AQ);
+		if not string.find(name, "Scarab Brooch") and not string.find(name, "Petrified Scarab") then
+			if string.find(name, "Scarab") or string.find(name, "Idol") then
+				cfg = LPCONFIG.AQ
+				RollOnLoot(id, LPCONFIG.AQ);
+			end
 		end
 	end
 	
