@@ -664,7 +664,7 @@ function LazyPig_OnEvent(event)
 				gossipbreak = true
 			elseif (GossipOptions[i] == "trainer" and dsc == "Reset my talents.") then
 				gossipbreak = false
-			elseif (GossipOptions[i] == "trainer" or GossipOptions[i] == "vendor" and processgossip or GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip) or GossipOptions[i] == "gossip" or GossipOptions[i] == "petition" and (IsAltKeyDown() or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core") and processgossip)) then
+			elseif (GossipOptions[i] == "trainer" and processgossip or GossipOptions[i] == "vendor" and processgossip or GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip) or GossipOptions[i] == "gossip" and processgossip or GossipOptions[i] == "petition" and (IsAltKeyDown() or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core") and processgossip)) then
 				gossipnr = i
 			elseif GossipOptions[i] == "taxi" and processgossip then
 				gossipnr = i
