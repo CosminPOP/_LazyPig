@@ -669,7 +669,7 @@ function LazyPig_OnEvent(event)
 					or (GossipOptions[i] == "vendor" and processgossip)
 					or (GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip))
 					or (GossipOptions[i] == "gossip" and processgossip)
-					or (GossipOptions[i] == "banker" and processgossip)
+					or (GossipOptions[i] == "banker" and string.find(dsc, "^I would like to check my deposit box.") and processgossip)
 					or (GossipOptions[i] == "petition" and (IsAltKeyDown()or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core")) and processgossip))
 				then
 				gossipnr = i
