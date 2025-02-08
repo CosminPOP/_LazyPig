@@ -211,7 +211,7 @@ function LazyPig_CreateOptionsFrame()
 	local frame = CreateFrame("Frame", "LazyPigOptionsFrame")
 	tinsert(UISpecialFrames,"LazyPigOptionsFrame")
 	frame:SetScale(.81)
-
+	frame:SetFrameStrata("DIALOG")
 	frame:SetWidth(630)
 	frame:SetHeight(633)
 	

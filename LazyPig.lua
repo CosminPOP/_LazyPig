@@ -1,49 +1,48 @@
-LPCONFIG = {
-	DISMOUNT = true, 
-	CAM = false, 
-	GINV = true, 
-	FINV = true, 
-	SINV = nil, 
-	DINV = true, 
-	SUMM = true, 
-	EBG = true, 
-	LBG = true, 
-	QBG = true, 
-	RBG = true, 
-	SBG = false, 
-	AQUE = true,
-	LOOT = true, 
-	EPLATE = false, 
-	FPLATE = false, 
-	HPLATE = false, 
-	RIGHT = true,
-	ZG = 1,
-	MC = 1,
-	AQ = 2,
-	AQMOUNT = 0,
-	SAND = 1,
-	NAXX = 0,
-	BWL = 0,
-	WHITE_TAILORING = 0,
-	FOOD_AND_DRINK = 0,
-	ES_SHARDS = 0,
-	ROLLMSG = true,
-	DUEL = false, 
-	GREEN = 2, 
-	SPECIALKEY = true, 
-	WORLDDUNGEON = false, 
-	WORLDRAID = false, 
-	WORLDBG = false, 
-	WORLDUNCHECK = nil, 
-	SPAM = false,
-	SPAM_UNCOMMON = false,
-	SPAM_RARE = false,
-	SHIFTSPLIT = true, 
-	REZ = true, 
-	GOSSIP = true, 
-	SALVA = false,
-	REMOVEMANABUFFS = false
-}
+LPCONFIG = {}
+LPCONFIG.DISMOUNT = true
+LPCONFIG.CAM = false
+LPCONFIG.GINV = true
+LPCONFIG.FINV = true
+LPCONFIG.SINV = nil
+LPCONFIG.DINV = true
+LPCONFIG.SUMM = true
+LPCONFIG.EBG = true
+LPCONFIG.LBG = true
+LPCONFIG.QBG = true
+LPCONFIG.RBG = true
+LPCONFIG.SBG = false
+LPCONFIG.AQUE = true
+LPCONFIG.LOOT = true
+LPCONFIG.EPLATE = false
+LPCONFIG.FPLATE = false
+LPCONFIG.HPLATE = false
+LPCONFIG.RIGHT = true
+LPCONFIG.ZG = 1
+LPCONFIG.MC = 1
+LPCONFIG.AQ = 2
+LPCONFIG.AQMOUNT = 0
+LPCONFIG.SAND = 1
+LPCONFIG.NAXX = 0
+LPCONFIG.BWL = 0
+LPCONFIG.WHITE_TAILORING = 0
+LPCONFIG.FOOD_AND_DRINK = 0
+LPCONFIG.ES_SHARDS = 0
+LPCONFIG.ROLLMSG = true
+LPCONFIG.DUEL = false
+LPCONFIG.GREEN = 2
+LPCONFIG.SPECIALKEY = true
+LPCONFIG.WORLDDUNGEON = false
+LPCONFIG.WORLDRAID = false
+LPCONFIG.WORLDBG = false
+LPCONFIG.WORLDUNCHECK = nil
+LPCONFIG.SPAM = false
+LPCONFIG.SPAM_UNCOMMON = false
+LPCONFIG.SPAM_RARE = false
+LPCONFIG.SHIFTSPLIT = true
+LPCONFIG.REZ = true
+LPCONFIG.GOSSIP = true
+LPCONFIG.SALVA = false
+LPCONFIG.REMOVEMANABUFFS = false
 
 BINDING_HEADER_LP_HEADER = "_LazyPig";
 BINDING_NAME_LOGOUT = "Logout";
@@ -80,22 +79,22 @@ local ctrlshifttime = 0
 local altshifttime = 0
 local greenrolltime = 0
 
-local timer_split = false
-local player_summon_confirm = false
-local player_summon_message = false
-local player_bg_confirm = false
-local player_bg_message = false
-local afk_active = false
+local timer_split = nil
+local player_summon_confirm = nil
+local player_summon_message = nil
+local player_bg_confirm = nil
+local player_bg_message = nil
+local afk_active = nil
+local duel_active = nil
 local dnd_active = false
-local duel_active = false
-local merchantstatus = false
-local tradestatus = false
-local mailstatus = false
-local auctionstatus = false
-local auctionbrowse = false
-local bankstatus = false
-local channelstatus = false
-local battleframe = false
+local merchantstatus = nil
+local tradestatus = nil
+local mailstatus = nil
+local auctionstatus = nil
+local auctionbrowse = nil
+local bankstatus = nil
+local channelstatus = nil
+local battleframe = nil
 local wsgefc = nil
 
 local WHITE = "|cffffffff"
@@ -105,7 +104,6 @@ local BLUE = "|cff00eeee"
 
 local ScheduleButton = {}
 local ScheduleFunction = {}
-local ScheduleSplit = {}
 local QuestRecord = {}
 local ActiveQuest = {}
 local AvailableQuest = {}
@@ -123,82 +121,80 @@ ScheduleSplit.sbag = {}
 ScheduleSplit.count = {}
 
 local LazyPigMenuObjects = {}
-local LazyPigMenuStrings = {
-		[00]= "Need",
-		[01]= "Greed",
-		[02]= "Pass",
-		[03]= "Need",
-		[04]= "Greed",
-		[05]= "Pass",
-		[06]= "Need",
-		[07]= "Greed",
-		[08]= "Pass",
-		[09]= "Need",
-		[10]= "Greed",
-		[11]= "Pass",
-		[12]= "Need",
-		[13]= "Greed",
-		[14]= "Pass",
-		[15]= "Need",
-		[16]= "Greed",
-		[17]= "Pass",
-		[18]= "Need",
-		[19]= "Greed",
-		[20]= "Pass",
-		[21]= "LazyPig Auto Roll Messages",
-		[22]= "Dungeon",
-		[23]= "Raid",
-		[24]= "Battleground",
-		[25]= "Mute Permanently",
-		[26]= "Need",
-		[27]= "Greed",
-		[28]= "Pass",
-		[30]= "GuildMates",
-		[31]= "Friends",
-		[32]= "Strangers",
-		[33]= "Idle while in BG or Queue",
-		[40]= "Show Friends",
-		[41]= "Show Enemies",
-		[42]= "Hide if Unchecked",
-		[50]= "Enter BG",
-		[51]= "Leave BG",
-		[52]= "Queue BG",
-		[53]= "Auto Release",
-		[54]= "Leader Queue Announce",
-		[55]= "Block BG Quest Sharing",
-		
-		[60]= "Always",
-		[61]= "Warrior Shield/Druid Bear",
-		[62] = "Remove Wis/Int/Spirit",
-		[63] = "Remove Aspect of the Wolf",
-		
-		[70]= "Players' Spam",
-		[71]= "Uncommon Roll",
-		[72]= "Rare Roll",
-		[73]= "Poor-Common-Money Loot",
-		
-		
-		[90]= "Summon Auto Accept",
-		[91]= "Loot Window Auto Position",
-		[92]= "Improved Right Click",
-		[93]= "Easy Split/Merge (Shift+Right_Click)",
-		[94]= "Extended Camera Distance",
-		[95]= "Special Key Combinations",
-		[96]= "Duel Auto Decline (Shift to ByPass)",
-		[97]= "Instance Resurrection Accept OOC",
-		[98]= "Gossip Auto Processing",
-		[100]= "Auto Dismount",
-		[101]= "Chat Spam Filter",
-		[102]= "Need",
-		[103]= "Greed",
-		[104]= "Pass",
-		[105]= "Need",
-		[106]= "Greed",
-		[107]= "Pass",
-		[108]= "Need",
-		[109]= "Greed",
-		[110]= "Pass"
-}
+local LazyPigMenuStrings = {}
+LazyPigMenuStrings[00] = "Need"
+LazyPigMenuStrings[01] = "Greed"
+LazyPigMenuStrings[02] = "Pass"
+LazyPigMenuStrings[03] = "Need"
+LazyPigMenuStrings[04] = "Greed"
+LazyPigMenuStrings[05] = "Pass"
+LazyPigMenuStrings[06] = "Need"
+LazyPigMenuStrings[07] = "Greed"
+LazyPigMenuStrings[08] = "Pass"
+LazyPigMenuStrings[09] = "Need"
+LazyPigMenuStrings[10] = "Greed"
+LazyPigMenuStrings[11] = "Pass"
+LazyPigMenuStrings[12] = "Need"
+LazyPigMenuStrings[13] = "Greed"
+LazyPigMenuStrings[14] = "Pass"
+LazyPigMenuStrings[15] = "Need"
+LazyPigMenuStrings[16] = "Greed"
+LazyPigMenuStrings[17] = "Pass"
+LazyPigMenuStrings[18] = "Need"
+LazyPigMenuStrings[19] = "Greed"
+LazyPigMenuStrings[20] = "Pass"
+LazyPigMenuStrings[21] = "LazyPig Auto Roll Messages"
+LazyPigMenuStrings[22] = "Dungeon"
+LazyPigMenuStrings[23] = "Raid"
+LazyPigMenuStrings[24] = "Battleground"
+LazyPigMenuStrings[25] = "Mute Permanently"
+LazyPigMenuStrings[26] = "Need"
+LazyPigMenuStrings[27] = "Greed"
+LazyPigMenuStrings[28] = "Pass"
+LazyPigMenuStrings[30] = "GuildMates"
+LazyPigMenuStrings[31] = "Friends"
+LazyPigMenuStrings[32] = "Strangers"
+LazyPigMenuStrings[33] = "Idle while in BG or Queue"
+LazyPigMenuStrings[40] = "Show Friends"
+LazyPigMenuStrings[41] = "Show Enemies"
+LazyPigMenuStrings[42] = "Hide if Unchecked"
+LazyPigMenuStrings[50] = "Enter BG"
+LazyPigMenuStrings[51] = "Leave BG"
+LazyPigMenuStrings[52] = "Queue BG"
+LazyPigMenuStrings[53] = "Auto Release"
+LazyPigMenuStrings[54] = "Leader Queue Announce"
+LazyPigMenuStrings[55] = "Block BG Quest Sharing"
+
+LazyPigMenuStrings[60] = "Always"
+LazyPigMenuStrings[61] = "Warrior Shield/Druid Bear"
+LazyPigMenuStrings[62] = "Remove Wis/Int/Spirit"
+LazyPigMenuStrings[63] = "Remove Aspect of the Wolf"
+
+LazyPigMenuStrings[70] = "Players' Spam"
+LazyPigMenuStrings[71] = "Uncommon Roll"
+LazyPigMenuStrings[72] = "Rare Roll"
+LazyPigMenuStrings[73] = "Poor-Common-Money Loot"
+
+LazyPigMenuStrings[90] = "Summon Auto Accept"
+LazyPigMenuStrings[91] = "Loot Window Auto Position"
+LazyPigMenuStrings[92] = "Improved Right Click"
+LazyPigMenuStrings[93] = "Easy Split/Merge (Shift+Right_Click)"
+LazyPigMenuStrings[94] = "Extended Camera Distance"
+LazyPigMenuStrings[95] = "Special Key Combinations"
+LazyPigMenuStrings[96] = "Duel Auto Decline (Shift to ByPass)"
+LazyPigMenuStrings[97] = "Instance Resurrection Accept OOC"
+LazyPigMenuStrings[98] = "Gossip Auto Processing"
+LazyPigMenuStrings[100] = "Auto Dismount"
+LazyPigMenuStrings[101] = "Chat Spam Filter"
+LazyPigMenuStrings[102] = "Need"
+LazyPigMenuStrings[103] = "Greed"
+LazyPigMenuStrings[104] = "Pass"
+LazyPigMenuStrings[105] = "Need"
+LazyPigMenuStrings[106] = "Greed"
+LazyPigMenuStrings[107] = "Pass"
+LazyPigMenuStrings[108] = "Need"
+LazyPigMenuStrings[109] = "Greed"
+LazyPigMenuStrings[110] = "Pass"
 
 function LazyPig_OnLoad()
 	SelectGossipActiveQuest = LazyPig_SelectGossipActiveQuest;
@@ -234,6 +230,12 @@ function LazyPig_Command()
 end
 
 function LazyPig_OnUpdate()
+	if (this.tick or 0.1) > GetTime() then
+		return
+	else
+		this.tick = GetTime() + 0.1
+	end
+
 	local current_time = GetTime();
 	local shiftstatus = IsShiftKeyDown();
 	local ctrlstatus = IsControlKeyDown();
@@ -419,6 +421,7 @@ end
 
 function LazyPig_OnEvent(event)
 	if (event == "ADDON_LOADED") and (arg1 == "_LazyPig") then
+		this:UnregisterEvent("ADDON_LOADED")
 		local LP_TITLE = GetAddOnMetadata("_LazyPig", "Title")
 		local LP_VERSION = GetAddOnMetadata("_LazyPig", "Version")
 		local LP_AUTHOR = GetAddOnMetadata("_LazyPig", "Author")
@@ -440,7 +443,7 @@ function LazyPig_OnEvent(event)
 		this:RegisterEvent("GOSSIP_SHOW")
 		this:RegisterEvent("QUEST_GREETING")
 		this:RegisterEvent("UI_ERROR_MESSAGE")
-		this:RegisterEvent("CHAT_MSG_LOOT")
+		--this:RegisterEvent("CHAT_MSG_LOOT")
 		--this:RegisterEvent("CHAT_MSG_MONEY")
 		this:RegisterEvent("QUEST_PROGRESS")
 		this:RegisterEvent("QUEST_COMPLETE")
@@ -476,8 +479,6 @@ function LazyPig_OnEvent(event)
 		ScheduleFunctionLaunch(LazyPig_ZoneCheck2, 7);
 		ScheduleFunctionLaunch(LazyPig_RefreshNameplates, 0.25);
 		MailtoCheck();
-		
-		
 
 		if LPCONFIG.CAM then SetCVar("cameraDistanceMax",50) end
 		if LPCONFIG.LOOT then UIPanelWindows["LootFrame"] = nil end
@@ -563,9 +564,9 @@ function LazyPig_OnEvent(event)
 	elseif(event == "START_LOOT_ROLL") then
 		LazyPig_AutoRoll(arg1)
 	
-	elseif(event == "CHAT_MSG_LOOT") then
-		if (string.find(arg1 ,"You won") or string.find(arg1 ,"You receive")) and (string.find(arg1 ,"cffa335e") or string.find(arg1, "cff0070d") or string.find(arg1, "cffff840")) and not string.find(arg1 ,"Bijou") and not string.find(arg1 ,"Idol") and not string.find(arg1 ,"Shard") then
-		end
+	-- elseif(event == "CHAT_MSG_LOOT") then
+	-- 	if (string.find(arg1 ,"You won") or string.find(arg1 ,"You receive")) and (string.find(arg1 ,"cffa335e") or string.find(arg1, "cff0070d") or string.find(arg1, "cffff840")) and not string.find(arg1 ,"Bijou") and not string.find(arg1 ,"Idol") and not string.find(arg1 ,"Shard") then
+	-- 	end
 	
 	elseif(event == "UI_ERROR_MESSAGE") then
 		if(string.find(arg1, "mounted") or string.find(arg1, "while silenced")) and LPCONFIG.DISMOUNT then
@@ -634,7 +635,7 @@ function LazyPig_OnEvent(event)
 		local dsc = nil
 		local gossipnr = nil
 		local gossipbreak = nil
-		local processgossip = IsShiftKeyDown() or LPCONFIG.GOSSIP
+		local processgossip = (IsShiftKeyDown() and not LPCONFIG.GOSSIP) or (LPCONFIG.GOSSIP and not IsShiftKeyDown())
 		
 		dsc,GossipOptions[1],_,GossipOptions[2],_,GossipOptions[3],_,GossipOptions[4],_,GossipOptions[5] = GetGossipOptions()	
 
@@ -664,7 +665,13 @@ function LazyPig_OnEvent(event)
 				gossipbreak = true
 			elseif (GossipOptions[i] == "trainer" and dsc == "Reset my talents.") then
 				gossipbreak = false
-			elseif ((GossipOptions[i] == "trainer" and processgossip) or (GossipOptions[i] == "vendor" and processgossip) or (GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip)) or (GossipOptions[i] == "gossip" and processgossip) or (GossipOptions[i] == "petition" and (IsAltKeyDown() or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core")) and processgossip)) then
+			elseif ((GossipOptions[i] == "trainer" and processgossip)
+					or (GossipOptions[i] == "vendor" and processgossip)
+					or (GossipOptions[i] == "battlemaster" and (LPCONFIG.QBG or processgossip))
+					or (GossipOptions[i] == "gossip" and processgossip)
+					or (GossipOptions[i] == "banker" and processgossip)
+					or (GossipOptions[i] == "petition" and (IsAltKeyDown()or IsShiftKeyDown() or string.find(dsc, "Teleport me to the Molten Core")) and processgossip))
+				then
 				gossipnr = i
 			elseif GossipOptions[i] == "taxi" and processgossip then
 				gossipnr = i
@@ -750,7 +757,6 @@ end
 --code taken from quickloot
 local function LazyPig_ItemUnderCursor()
 	if LPCONFIG.LOOT then
-		local index;
 		local x, y = GetCursorPosition();
 		local scale = LootFrame:GetEffectiveScale();
 		x = x / scale;
@@ -802,10 +808,8 @@ end
 
 function IsGuildMate(name)
 	if IsInGuild() then
-		local ngm=GetNumGuildMembers()
-		for i=1, ngm do
-			n, rank, rankIndex, level, class, zone, note, officernote, online, status, classFileName = GetGuildRosterInfo(i);
-			if strlower(n) == strlower(name) then
+		for i=1, GetNumGuildMembers() do
+			if strlower(GetGuildRosterInfo(i)) == strlower(name) then
 			  return true
 			end
 		end
@@ -848,14 +852,20 @@ function LazyPig_AutoSummon()
 	end
 end
 
+local bgStatus = {}
+bgStatus[1] = { status = "", map = "", id = 0 }
+bgStatus[2] = { status = "", map = "", id = 0 }
+bgStatus[3] = { status = "", map = "", id = 0 }
+
 function Check_Bg_Status()
-	local bgStatus = {};	
 	local player_bg_active = false
 	local player_bg_request = false
 	
 	for i=1, MAX_BATTLEFIELD_QUEUES do
 		local status, mapName, instanceID = GetBattlefieldStatus(i);
-		bgStatus[i] = {};
+		for k in pairs(bgStatus[i]) do
+			bgStatus[i][k] = nil
+		end
 		bgStatus[i]["status"] = status;
 		bgStatus[i]["map"] = mapName;
 		bgStatus[i]["id"] = instanceID;
@@ -954,15 +964,15 @@ function LazyPig_BagReturn(find)
 end
 
 function LazyPig_AutoRoll(id)
-	local cfg = ""
+	local cfg = 0
 	local zone = GetRealZoneText()
-	RollReturn = function(cfg)
+	local RollReturn = function(config)
 		local txt = ""
-		if cfg == 1 then
+		if config == 1 then
 			txt = "NEED"
-		elseif cfg == 2 then
+		elseif config == 2 then
 			txt = "GREED"
-		elseif cfg == 0 then
+		elseif config == 0 then
 			txt = "PASS"
 		end
 		return txt
@@ -1065,12 +1075,10 @@ function LazyPig_AutoRoll(id)
 			getglobal("StaticPopup"..i.."Button1"):Click();
 		end
 	end
-
-	return
 end
 
 function LazyPig_GreenRoll()
-	RollReturn = function()
+	local RollReturn = function()
 		local txt = ""
 		if LPCONFIG.GREEN == 1 then
 			txt = "NEED"
@@ -1299,7 +1307,7 @@ function LazyPig_Dismount()
 		LazyPig_Buff_Tooltip:SetPlayerBuff(index)
 		local desc = LazyPig_Buff_TooltipTextLeft2:GetText()
 		if desc then
-			_, _, speed = string.find(desc, tooltipfind) 
+			local _, _, speed = string.find(desc, tooltipfind) 
 			if speed or string.find(desc, expansionMounts) or string.find(desc, turtleMount) or string.find(desc, turtleMountv2) then
 			
 				CancelPlayerBuff(counter)
@@ -1351,27 +1359,90 @@ function LazyPig_ItemIsTradeable(bag, item)
 	return true
 end
 
+local function SetContains(set, key, value)
+    if not set then
+        return false
+    end
+    if not key and value then
+        for _, v in pairs(set) do
+            if v == value then
+                return true
+            end
+        end
+    end
+    if key and not value then
+        return set[key] ~= nil
+    end
+    return set[key] == value
+end
 
+local raids = {}
+raids["Molten Core"] = true
+raids["Blackwing Lair"] = true
+raids["Zul'Gurub"] = true
+raids["Ahn'Qiraj"] = true
+raids["Onyxia's Lair"] = true
+raids["Ruins of Ahn'Qiraj"] = true
+raids["Temple of Ahn'Qiraj"] = true
+raids["Naxxramas"] = true
+raids["Blackrock Spire"] = true
+raids["Emerald Sanctum"] = true
+raids["Lower Karazhan Halls"] = true
+raids["Upper Karazhan Halls"] = true
+
+local dungeons = {}
+dungeons["Ragefire Chasm"] = true
+dungeons["Wailing Caverns"] = true
+dungeons["The Deadmines"] = true
+dungeons["Shadowfang Keep"] = true
+dungeons["Blackfathom Deeps"] = true
+dungeons["The Stockade"] = true
+dungeons["Gnomeregan"] = true
+dungeons["Razorfen Kraul"] = true
+dungeons["Crescent Grove"] = true
+dungeons["Scarlet Monastery"] = true
+dungeons["Razorfen Downs"] = true
+dungeons["Uldaman"] = true
+dungeons["Gilneas City"] = true
+dungeons["Maraudon"] = true
+dungeons["Zul'Farrak"] = true
+dungeons["Sunken Temple"] = true
+dungeons["Hateforge Quarry"] = true
+dungeons["Blackrock Depths"] = true
+dungeons["Dire Maul"] = true
+dungeons["Scholomance"] = true
+dungeons["Stratholme"] = true
+dungeons["Lower Blackrock Spire"] = true
+dungeons["Upper Blackrock Spire"] = true
+dungeons["Caverns of Time: Black Morass"] = true
+dungeons["Stormwind Vault"] = true
+
+local battlegrounds = {}
+battlegrounds["Arathi Basin"] = true
+battlegrounds["Warsong Gulch"] = true
+battlegrounds["Alterac Valley"] = true
+battlegrounds["Blood Ring"] = true
+battlegrounds["Sunnyglade Valley"] = true
 
 function LazyPig_Raid()
-	local t = GetRealZoneText()
-	if t =="Molten Core" or t =="Blackwing Lair" or t =="Zul'Gurub" or t =="Ahn'Qiraj" or t =="Onyxia's Lair" or t =="Ruins of Ahn'Qiraj" or t =="Temple of Ahn'Qiraj" or t =="Naxxramas" or t =="Blackrock Spire" or t =="Emerald Sanctum" or t =="Lower Karazhan Halls" or t == "Upper Karazhan Halls" then
+	local zone = GetRealZoneText()
+	if SetContains(raids, zone) then
 		return true
 	end
 	return false
 end
 
 function LazyPig_Dungeon()
-	local t = GetRealZoneText()
-	if t =="Dire Maul" or t =="Stratholme"  or t =="Scholomance" or t =="Blackrock Depths" or t =="Sunken Temple" or t =="The Stockade" or t =="Zul'Farrak" or t =="Scarlet Monastery" or t =="Gnomeregan" or t =="The Deadmines" or t=="Blackfathom Deeps" or t=="Wailing Caverns" or t=="Razorfen Downs" or t=="Razorfen Kraul" or t=="Gilneas City" or t=="Crescent Grove" or t=="Hateforge Quarry" then 
+	local zone = GetRealZoneText()
+	if SetContains(dungeons, zone) then
 		return true
 	end
 	return false
 end
 
 function LazyPig_BG()
-	local t = GetRealZoneText()
-	if t == "Arathi Basin" or t == "Warsong Gulch" or t == "Alterac Valley" then
+	local zone = GetRealZoneText()
+	if SetContains(battlegrounds, zone) then
 		return true
 	end
 	return false
@@ -1379,7 +1450,7 @@ end
 
 function LazyPig_Queue()
 	for i=1, MAX_BATTLEFIELD_QUEUES do
-		local status, mapName, instanceID = GetBattlefieldStatus(i);	
+		local status, mapName, instanceID = GetBattlefieldStatus(i)
 		if(status == "confirm" or status == "active") then
 			return true
 		end
@@ -1455,7 +1526,7 @@ function LazyPig_WatchSplit(enable)
 			timer_split = time + duration - 1
 			txt_show = true
 		end
-		if txt_show then LazyPig_Text("- Ctrl  "..tmp_splitval.."  Alt +", duration) end
+		if txt_show then LazyPig_Text("- Ctrl  "..tmp_splitval.."  Alt +") end
 	end
 	return returnval
 end
@@ -2266,9 +2337,7 @@ function LazyPig_PlayerClass(class, unit)
 end
 
 function LazyPig_IsBearForm()
-	local i;
-	local max = GetNumShapeshiftForms();
-	for i = 1 , max do
+	for i = 1 , GetNumShapeshiftForms() do
 		local _, name, isActive = GetShapeshiftFormInfo(i);
 		if(isActive and LazyPig_PlayerClass("Druid", "player") and (name == "Bear Form" or name == "Dire Bear Form")) then
 			return true
@@ -2330,66 +2399,57 @@ function LazyPig_CancelAspect()
     return nil
 end
 
-function LazyPig_CancelSalvationBuff()
-    local buff = {"Spell_Holy_SealOfSalvation", "Spell_Holy_GreaterBlessingofSalvation"}
-    local counter = 0
-    while GetPlayerBuff(counter) >= 0 do
-        local index, untilCancelled = GetPlayerBuff(counter)
-        if untilCancelled ~= 1 then
-            local texture = GetPlayerBuffTexture(index)
-            if texture then  -- Check if texture is not nil
-                local i = 1
-                while buff[i] do
-                    if string.find(texture, buff[i]) then
-                        CancelPlayerBuff(index);
-                        UIErrorsFrame:Clear();
-                        UIErrorsFrame:AddMessage("Salvation Removed");
-                        return
-                    end
-                    i = i + 1
-                end
-            end
-        end
-        counter = counter + 1
-    end
-    return nil
-end
-
-
+local salvationbuffs = {"Spell_Holy_SealOfSalvation", "Spell_Holy_GreaterBlessingofSalvation"}
 function LazyPig_CheckSalvation()
 	if(LPCONFIG.SALVA == 1 or LPCONFIG.SALVA == 2 and (LazyPig_IsShieldEquipped() and LazyPig_PlayerClass("Warrior", "player") or LazyPig_IsBearForm())) then
-		LazyPig_CancelSalvationBuff()
-	end
-end
-
-function LazyPig_CancelManaBuffs()
-	local buff = {"Spell_Holy_SealOfWisdom", "Spell_Holy_GreaterBlessingofWisdom","Spell_Holy_ArcaneIntellect","Spell_Holy_MagicalSentry","Spell_Holy_PrayerofSpirit","Spell_Holy_DivineSpirit"}
-	local counter = 0
-	while GetPlayerBuff(counter) >= 0 do
-		local index, untilCancelled = GetPlayerBuff(counter)
-		if untilCancelled ~= 1 then
-			local texture = GetPlayerBuffTexture(index)
-			if texture then  -- Check if texture is not nil
-				local i = 1
-				while buff[i] do
-					if string.find(texture, buff[i]) then
-						CancelPlayerBuff(index);
-						UIErrorsFrame:Clear();
-						UIErrorsFrame:AddMessage("Intellect or Wisdom or Spirit Removed");
-						return
+		local counter = 0
+		while GetPlayerBuff(counter) >= 0 do
+			local index, untilCancelled = GetPlayerBuff(counter)
+			if untilCancelled ~= 1 then
+				local texture = GetPlayerBuffTexture(index)
+				if texture then  -- Check if texture is not nil
+					local i = 1
+						while salvationbuffs[i] do
+							if string.find(texture, salvationbuffs[i]) then
+							CancelPlayerBuff(index);
+							UIErrorsFrame:Clear();
+							UIErrorsFrame:AddMessage("Salvation Removed");
+							return
+						end
+						i = i + 1
 					end
-					i = i + 1
 				end
 			end
+			counter = counter + 1
 		end
-		counter = counter + 1
+		return nil
 	end
-	return nil
 end
 
+local manabuffs = {"Spell_Holy_SealOfWisdom", "Spell_Holy_GreaterBlessingofWisdom","Spell_Holy_ArcaneIntellect","Spell_Holy_MagicalSentry","Spell_Holy_PrayerofSpirit","Spell_Holy_DivineSpirit"}
 function LazyPig_CheckManaBuffs()
 	if(LPCONFIG.REMOVEMANABUFFS == 1) then
-		LazyPig_CancelManaBuffs()
+		local counter = 0
+		while GetPlayerBuff(counter) >= 0 do
+			local index, untilCancelled = GetPlayerBuff(counter)
+			if untilCancelled ~= 1 then
+				local texture = GetPlayerBuffTexture(index)
+				if texture then  -- Check if texture is not nil
+					local i = 1
+					while manabuffs[i] do
+						if string.find(texture, manabuffs[i]) then
+							CancelPlayerBuff(index);
+							UIErrorsFrame:Clear();
+							UIErrorsFrame:AddMessage("Intellect or Wisdom or Spirit Removed");
+							return
+						end
+						i = i + 1
+					end
+				end
+			end
+			counter = counter + 1
+		end
+		return nil
 	end
 end
 
@@ -2530,9 +2590,3 @@ function LazyPig_Duel_EFC()
 	end	
 end
 
-
-function aaa()
-PlayerFrame:Hide()
-
-
-end
