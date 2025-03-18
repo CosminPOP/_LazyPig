@@ -2507,7 +2507,12 @@ function LazyPig_ChatFrame_OnEvent(event)
 		end
 		ChatMessage[index][arg1] = time		
 	end
-	
+
+    -- suppress BigWigs spam
+	if LPCONFIG.SPAM and event == "CHAT_MSG_SAY" and string.find(arg1 or "" ,"^Casted %u[%a%s]+ on %u[%a%s]+") then
+        return
+    end
+
 	Original_ChatFrame_OnEvent(event);
 end
 
