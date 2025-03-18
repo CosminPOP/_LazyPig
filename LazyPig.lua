@@ -853,9 +853,9 @@ function LazyPig_AutoSummon()
 end
 
 local bgStatus = {}
-bgStatus[1] = { status = "", map = "", id = 0 }
-bgStatus[2] = { status = "", map = "", id = 0 }
-bgStatus[3] = { status = "", map = "", id = 0 }
+for i = 1, MAX_BATTLEFIELD_QUEUES do
+    bgStatus[i] = { status = "", map = "", id = 0 }
+end
 
 function Check_Bg_Status()
 	local player_bg_active = false
@@ -1386,7 +1386,6 @@ raids["Ruins of Ahn'Qiraj"] = true
 raids["Temple of Ahn'Qiraj"] = true
 raids["Naxxramas"] = true
 raids["The Upper Necropolis"] = true
-raids["Blackrock Spire"] = true
 raids["Emerald Sanctum"] = true
 raids["Tower or Karazhan"] = true
 
@@ -1399,23 +1398,22 @@ dungeons["Blackfathom Deeps"] = true
 dungeons["The Stockade"] = true
 dungeons["Gnomeregan"] = true
 dungeons["Razorfen Kraul"] = true
-dungeons["Crescent Grove"] = true
 dungeons["Scarlet Monastery"] = true
 dungeons["Razorfen Downs"] = true
 dungeons["Uldaman"] = true
-dungeons["Gilneas City"] = true
 dungeons["Maraudon"] = true
 dungeons["Zul'Farrak"] = true
 dungeons["The Temple of Atal'Hakkar"] = true
-dungeons["Hateforge Quarry"] = true
 dungeons["Blackrock Depths"] = true
+dungeons["Blackrock Spire"] = true
 dungeons["Dire Maul"] = true
 dungeons["Scholomance"] = true
 dungeons["Stratholme"] = true
-dungeons["Lower Blackrock Spire"] = true
-dungeons["Upper Blackrock Spire"] = true
-dungeons["Caverns of Time: Black Morass"] = true
-dungeons["Stormwind Vault"] = true
+dungeons["Crescent Grove"] = true
+dungeons["Gilneas City"] = true
+dungeons["Hateforge Quarry"] = true
+dungeons["The Black Morass"] = true
+dungeons["Karazhan Crypt"] = true
 
 local battlegrounds = {}
 battlegrounds["Arathi Basin"] = true
@@ -2278,16 +2276,16 @@ function LazyPig_ZoneCheck2()
 	LazyPig_ZoneCheck()
 end
 
+local process = function(ChatFrame, name)  
+    for index, value in ChatFrame.channelList do
+        if (strupper(name) == strupper(value)) then
+            return true
+        end
+    end
+    return nil
+end
+
 function LazyPig_ZoneCheck()
-	local process = function(ChatFrame, name)  
-		for index, value in ChatFrame.channelList do
-			if (strupper(name) == strupper(value)) then
-				return true
-			end
-		end
-		return nil
-	end
-	
 	local leavechat = LPCONFIG.WORLDRAID and LazyPig_Raid() or LPCONFIG.WORLDDUNGEON and LazyPig_Dungeon() or LPCONFIG.WORLDBG and LazyPig_BG() or LPCONFIG.WORLDUNCHECK
 	for i = 1, NUM_CHAT_WINDOWS do	
 		local ChatFrame = getglobal("ChatFrame"..i)	
@@ -2373,9 +2371,9 @@ function LazyPig_CancelShapeshiftBuff()
 	end
 end
 
+local aspects = {"Ability_Mount_WhiteDireWolf"}
 function LazyPig_CancelAspect()
 	if LPCONFIG.ASPECT == nil then return end
-    local buff = {"Ability_Mount_WhiteDireWolf"}
     local counter = 0
     while GetPlayerBuff(counter) >= 0 do
         local index, untilCancelled = GetPlayerBuff(counter)
@@ -2383,8 +2381,8 @@ function LazyPig_CancelAspect()
             local texture = GetPlayerBuffTexture(index)
             if texture then  -- Check if texture is not nil
                 local i = 1
-                while buff[i] do
-                    if string.find(texture, buff[i]) then
+                while aspects[i] do
+                    if string.find(texture, aspects[i]) then
                         CancelPlayerBuff(index);
                         UIErrorsFrame:Clear();
                         UIErrorsFrame:AddMessage("Aspect of the Wolf removed.");
