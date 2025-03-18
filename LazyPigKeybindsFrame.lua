@@ -80,7 +80,7 @@ function LazyPig_CreateKeybindsFrame()
 	local frame = CreateFrame("Frame", "LazyPigKeybindsFrame")
 	tinsert(UISpecialFrames,"LazyPigKeybindsFrame")
 	frame:SetScale(.81)
-
+    frame:SetFrameStrata("DIALOG")
 	frame:SetWidth(570)
 	frame:SetHeight(175)
 	
