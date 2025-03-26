@@ -1387,7 +1387,7 @@ raids["Temple of Ahn'Qiraj"] = true
 raids["Naxxramas"] = true
 raids["The Upper Necropolis"] = true
 raids["Emerald Sanctum"] = true
-raids["Tower or Karazhan"] = true
+raids["Tower of Karazhan"] = true
 
 local dungeons = {}
 dungeons["Ragefire Chasm"] = true
